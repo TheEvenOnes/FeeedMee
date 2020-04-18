@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "ActionChangerItem",
+"language": "GDScript",
+"path": "res://gui/action_changer_item.gd"
+}, {
 "base": "ResourceFormatLoader",
 "class": "HTerrainDataLoader",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
 } ]
 _global_script_class_icons={
+"ActionChangerItem": "",
 "HTerrainDataLoader": "",
 "HTerrainDataSaver": ""
 }

@@ -1,6 +1,8 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="Control" type="Control"]
+[ext_resource path="res://gui/action_changer_item.tscn" type="PackedScene" id=1]
+
+[node name="Options" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -9,13 +11,60 @@ __meta__ = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Label" type="Label" parent="Camera2D"]
-margin_left = -40.0
-margin_top = -88.0
-margin_right = 40.0
-margin_bottom = -74.0
-text = "OPTIONS"
-align = 1
+[node name="MenuPicker" type="VBoxContainer" parent="Camera2D"]
+margin_left = -144.0
+margin_top = -73.0
+margin_right = 144.0
+margin_bottom = 13.0
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="ActionChanger" parent="Camera2D/MenuPicker" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 288.0
+margin_bottom = 14.0
+
+[node name="ActionChanger2" parent="Camera2D/MenuPicker" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 18.0
+margin_right = 288.0
+margin_bottom = 32.0
+action_name = "move_down"
+display_name = "Move down"
+
+[node name="ActionChanger3" parent="Camera2D/MenuPicker" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 36.0
+margin_right = 288.0
+margin_bottom = 50.0
+action_name = "move_left"
+display_name = "Move left"
+
+[node name="ActionChanger4" parent="Camera2D/MenuPicker" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 54.0
+margin_right = 288.0
+margin_bottom = 68.0
+action_name = "move_right"
+display_name = "Move right"
+
+[node name="ActionChanger5" parent="Camera2D/MenuPicker" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 72.0
+margin_right = 288.0
+margin_bottom = 86.0
+action_name = "move_jump"
+display_name = "Move jump"

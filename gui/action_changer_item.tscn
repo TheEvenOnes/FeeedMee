@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://gui/action_changer_item.gd" type="Script" id=1]
+
+[node name="ActionChanger" type="HBoxContainer"]
+anchor_left = -0.0965909
+anchor_right = -0.0965909
+margin_left = -59.0909
+margin_top = -14.0
+margin_right = 120.909
+margin_bottom = -9.53674e-07
+rect_min_size = Vector2( 180, 0 )
+size_flags_horizontal = 3
+alignment = 1
+script = ExtResource( 1 )
+
+[node name="DisplayName" type="Label" parent="."]
+margin_right = 125.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Move up"
+
+[node name="Action1" type="Label" parent="."]
+margin_left = 129.0
+margin_right = 161.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 32, 0 )
+text = "[X]"
+align = 2
+
+[node name="Action2" type="Label" parent="."]
+margin_left = 165.0
+margin_right = 180.0
+margin_bottom = 14.0
+text = "[Y]"

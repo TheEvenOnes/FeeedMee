@@ -11,6 +11,13 @@ onready var exit = $Exit
 
 onready var all_options = [start, options, exit]
 
+
+enum Item {
+	START = 0,
+	OPTIONS = 1,
+	EXIT = 2
+}
+
 var current = 0
 var target = 0
 
@@ -18,6 +25,8 @@ onready var l = get_current().margin_left
 onready var t = get_current().margin_top
 onready var r = get_current().margin_right
 onready var b = get_current().margin_bottom
+
+const MENU_OPTIONS = preload("res://gui/menu_options.tscn")
 
 func _ready() -> void:
 	selected.clear_points()
@@ -33,6 +42,10 @@ func _input(event: InputEvent) -> void:
 		target = (target + 1) % len(all_options)
 	if Input.is_action_just_pressed('ui_up'):
 		target = (target - 1) % len(all_options)
+	if Input.is_action_just_pressed('ui_accept'):
+		match target:
+			Item.OPTIONS:
+				get_node(".").replace_by(MENU_OPTIONS.instance())
 
 func _process(delta: float) -> void:
 	l = lerp(l, get_target().margin_left, 0.2)

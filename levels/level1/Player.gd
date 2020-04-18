@@ -1,20 +1,53 @@
 extends KinematicBody
 
-export (float) var GRAVITY = 9.81
-var velocity = Vector3(0.0, 0.0, 0.0)
+export (float) var GRAVITY = -24.8
+export (float) var MAX_SPEED = 9
+export (float) var JUMP_SPEED = 8
+export (float) var ACCEL = 4.5
+export (float) var DEACCEL = 16
+export (float) var MAX_SLOPE_ANGLE = 30
+
+var velocity = Vector3()
+var direction = Vector3()
 
 func _physics_process(delta: float) -> void:
-	# fake gravity
-	velocity += Vector3.DOWN * GRAVITY * delta
+		process_input(delta)
+		process_movement(delta)
 
-	var input_vector = Vector3.ZERO
+func process_input(delta: float) -> void:
+		direction = Vector3()
 
-	input_vector = Vector3(
-		Input.get_action_strength('move_right') - Input.get_action_strength('move_left'),
-		10.0 if Input.is_action_just_pressed('move_jump') else 0.0,
-		Input.get_action_strength('move_up') - Input.get_action_strength('move_down')
-	)
+		var input_movement_vector = Vector3()
 
-	velocity += input_vector
+		input_movement_vector.z += Input.get_action_strength('move_down')
+		input_movement_vector.z -= Input.get_action_strength('move_up')
+		input_movement_vector.x -= Input.get_action_strength('move_left')
+		input_movement_vector.x += Input.get_action_strength('move_right')
 
-	move_and_slide(velocity, Vector3.UP, true)
+		if is_on_floor():
+				if Input.is_action_just_pressed('move_jump'):
+						velocity.y = JUMP_SPEED
+
+		velocity += input_movement_vector
+
+func process_movement(delta):
+		direction.y = 0
+
+		velocity.y += delta * GRAVITY
+
+		var horizontal_velocity = velocity
+		horizontal_velocity.y = 0
+
+		var target = direction
+		target *= MAX_SPEED
+
+		var acceleration
+		if direction.dot(horizontal_velocity) > 0:
+				acceleration = ACCEL
+		else:
+				acceleration = DEACCEL
+
+		horizontal_velocity = horizontal_velocity.linear_interpolate(target, acceleration * delta)
+		velocity.x = horizontal_velocity.x
+		velocity.z = horizontal_velocity.z
+		velocity = move_and_slide(velocity, Vector3(0, 1, 0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))

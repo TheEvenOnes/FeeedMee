@@ -37,6 +37,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+SCALE_X = 4.0
 
 [node name="Selected" type="Line2D" parent="Camera2D/Selector"]
 width = 0.5
@@ -47,10 +48,10 @@ end_cap_mode = 1
 antialiased = true
 
 [node name="Start" type="Label" parent="Camera2D/Selector"]
-margin_left = 256.0
-margin_top = 104.0
-margin_right = 288.0
-margin_bottom = 118.0
+margin_left = 417.773
+margin_top = 191.211
+margin_right = 449.773
+margin_bottom = 205.211
 rect_pivot_offset = Vector2( -96, -16 )
 text = "Start"
 align = 1
@@ -60,10 +61,10 @@ __meta__ = {
 }
 
 [node name="Options" type="Label" parent="Camera2D/Selector"]
-margin_left = 237.0
-margin_top = 120.0
-margin_right = 288.0
-margin_bottom = 134.0
+margin_left = 398.773
+margin_top = 218.183
+margin_right = 449.773
+margin_bottom = 232.183
 rect_pivot_offset = Vector2( -96, -16 )
 text = "Options"
 align = 2
@@ -73,10 +74,10 @@ __meta__ = {
 }
 
 [node name="Exit" type="Label" parent="Camera2D/Selector"]
-margin_left = 265.0
-margin_top = 136.0
-margin_right = 288.0
-margin_bottom = 150.0
+margin_left = 426.773
+margin_top = 236.162
+margin_right = 449.773
+margin_bottom = 250.162
 rect_pivot_offset = Vector2( -96, -16 )
 text = "Exit"
 align = 2

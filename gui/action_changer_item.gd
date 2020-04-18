@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-class_name ActionChangerItem
+class_name ActionChangerItem, "res://icon.png"
 
 export (String) var action_name = "move_up"
 export (String) var display_name = "Move up"
@@ -31,6 +31,13 @@ func _ready():
 		var act = InputMap.get_action_list(action_name)[1]
 		action_2_label.text = "[" + binding_description(act) + "]"
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func get_column_count() -> int:
+	return 2
+
+func get_column(idx: int) -> Control:
+	match idx:
+		0:
+			return action_1_label
+		1:
+			return action_2_label
+	return null

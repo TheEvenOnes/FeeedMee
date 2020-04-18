@@ -26,6 +26,7 @@ onready var t = get_current().margin_top
 onready var r = get_current().margin_right
 onready var b = get_current().margin_bottom
 
+const LEVEL_1 = preload("res://levels/level1/Level.tscn")
 const MENU_OPTIONS = preload("res://gui/menu_options.tscn")
 
 func _ready() -> void:
@@ -38,14 +39,29 @@ func _ready() -> void:
 	selected.add_point(Vector2(l - SCALE_X, t + SCALE_Y))
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed('ui_down'):
+	if target < 0:
+		target += len(all_options)
+	if Input.is_action_just_pressed('ui_down') or Input.is_action_just_pressed('ui_focus_next'):
 		target = (target + 1) % len(all_options)
-	if Input.is_action_just_pressed('ui_up'):
+	if Input.is_action_just_pressed('ui_up') or Input.is_action_just_pressed('ui_focus_prev'):
 		target = (target - 1) % len(all_options)
-	if Input.is_action_just_pressed('ui_accept'):
+	if Input.is_action_just_pressed('ui_accept') or Input.is_action_just_pressed('ui_select'):
+		# replace_by does the wrong thing, seemingly.
+		#
+		# Instead, we create the replacement scene, teach it what to replace
+		# itself with when the scene is closed (i.e. "us"), add it, and remove
+		# ourselves.
 		match target:
+			Item.START:
+				get_tree().change_scene_to(LEVEL_1)
 			Item.OPTIONS:
-				get_node(".").replace_by(MENU_OPTIONS.instance())
+				# TODO: should this be instantiated only once and reused?
+				var inst := MENU_OPTIONS.instance()
+				inst.main_menu = get_node(".")
+				get_parent().add_child(inst)
+				get_parent().remove_child(get_node("."))
+			Item.EXIT:
+				get_tree().quit(0)
 
 func _process(delta: float) -> void:
 	l = lerp(l, get_target().margin_left, 0.2)

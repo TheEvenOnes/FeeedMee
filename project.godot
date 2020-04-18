@@ -25,7 +25,7 @@ _global_script_classes=[ {
 "path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
 } ]
 _global_script_class_icons={
-"ActionChangerItem": "",
+"ActionChangerItem": "res://icon.png",
 "HTerrainDataLoader": "",
 "HTerrainDataSaver": ""
 }
@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Feeed Mee"
-run/main_scene="res://levels/level1/Level.tscn"
+run/main_scene="res://gui/menu_root.tscn"
 config/icon="res://icon.png"
 
 [display]

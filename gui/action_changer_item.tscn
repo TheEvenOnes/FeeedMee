@@ -13,23 +13,27 @@ rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 alignment = 1
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DisplayName" type="Label" parent="."]
-margin_right = 125.0
+margin_right = 108.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Move up"
 
 [node name="Action1" type="Label" parent="."]
-margin_left = 129.0
-margin_right = 161.0
+margin_left = 112.0
+margin_right = 144.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 32, 0 )
 text = "[X]"
 align = 2
 
 [node name="Action2" type="Label" parent="."]
-margin_left = 165.0
+margin_left = 148.0
 margin_right = 180.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 32, 0 )
 text = "[Y]"

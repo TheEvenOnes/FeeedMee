@@ -12,10 +12,15 @@ onready var action_2_label = $Action2
 func binding_description(act: InputEvent) -> String:
 	if act is InputEventJoypadButton:
 		var actJB: InputEventJoypadButton = act
-		return "joypad btn " + String(actJB.button_index)
+		return "btn " + String(actJB.button_index)
 	if act is InputEventJoypadMotion:
 		var actJM: InputEventJoypadMotion = act
-		return "joypad axis " + String(actJM.axis)
+		var pfx: String
+		if actJM.axis_value < 0:
+			pfx = "-"
+		else:
+			pfx = "+"
+		return "axis " + pfx + String(actJM.axis)
 	if act is InputEventKey:
 		return act.as_text()
 	return "unsupported"

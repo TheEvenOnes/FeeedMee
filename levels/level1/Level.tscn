@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -6,16 +6,22 @@
 [ext_resource path="res://textures/flat_normal.png" type="Texture" id=4]
 [ext_resource path="res://levels/level1/Prop.gd" type="Script" id=5]
 [ext_resource path="res://sprites/tree.png" type="Texture" id=6]
+[ext_resource path="res://sprites/stones.png" type="Texture" id=7]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" type="Script" id=8]
+[ext_resource path="res://sprites/grass.png" type="Texture" id=9]
+[ext_resource path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" type="Texture" id=10]
+[ext_resource path="res://sprites/grass_splat.png" type="Texture" id=11]
 
 [sub_resource type="ProceduralSky" id=1]
 radiance_size = 0
-sky_curve = 0.626796
-sky_energy = 0.2
+sky_curve = 0.0405562
+sky_energy = 0.05
 ground_energy = 0.5
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="QuadMesh" id=3]
 size = Vector2( 0.5, 0.5 )
@@ -30,13 +36,12 @@ params_alpha_scissor_threshold = 0.98
 radius = 0.153746
 height = 0.166701
 
-[sub_resource type="QuadMesh" id=7]
+[sub_resource type="QuadMesh" id=6]
 
-[sub_resource type="SpatialMaterial" id=9]
-
-[sub_resource type="CylinderShape" id=8]
-radius = 0.49849
-height = 2.09332
+[sub_resource type="SpatialMaterial" id=7]
+flags_transparent = true
+params_billboard_mode = 2
+albedo_texture = ExtResource( 6 )
 
 [node name="Level" type="Spatial"]
 
@@ -48,11 +53,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744342, 0 )
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707106, 0, 10.601, 10 )
-projection = 1
+transform = Transform( 1, 0, 0, 0, 0.868718, 0.495307, 0, -0.495307, 0.868718, -9.53674e-07, 3.04492, 5.35726 )
 current = true
-fov = 50.0
-size = 6.0
+fov = 45.0
+size = 4.0
+near = 0.01
+far = 35.0
 
 [node name="MeshInstance" type="MeshInstance" parent="Player"]
 transform = Transform( 1, 0, 0, 8.88178e-16, 1, 0, 0, 0, 1, -8.81867e-19, 0.27135, 2.95906e-11 )
@@ -66,7 +72,7 @@ shape = SubResource( 5 )
 
 [node name="OmniLight" type="OmniLight" parent="Player"]
 transform = Transform( 1, -8.8818e-16, 0, 8.8818e-16, 1, 0, 0, 0, 1, -7.8324e-16, 0.881854, 0.472277 )
-light_color = Color( 1, 0.67451, 0.164706, 1 )
+light_color = Color( 1, 0.917647, 0.721569, 1 )
 light_energy = 0.5
 light_bake_mode = 0
 shadow_enabled = true
@@ -79,35 +85,57 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
 script = ExtResource( 1 )
 collision_enabled = true
 ambient_wind = 0.0
-lod_scale = 2.0
+lod_scale = 3.0
 map_scale = Vector3( 0.25, 0.25, 0.25 )
 _terrain_data = ExtResource( 3 )
 chunk_size = 16
 shader_type = "Classic4"
 custom_shader = null
-shader_params/u_ground_uv_scale = 20
+shader_params/u_ground_uv_scale = 6.0
 shader_params/u_depth_blending = true
-shader_params/u_triplanar = true
+shader_params/u_triplanar = false
 shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
-ground/albedo_bump_0 = null
+ground/albedo_bump_0 = ExtResource( 9 )
 ground/normal_roughness_0 = ExtResource( 4 )
-ground/albedo_bump_1 = null
-ground/normal_roughness_1 = null
+ground/albedo_bump_1 = ExtResource( 7 )
+ground/normal_roughness_1 = ExtResource( 4 )
 ground/albedo_bump_2 = null
 ground/normal_roughness_2 = null
 ground/albedo_bump_3 = null
 ground/normal_roughness_3 = null
 
-[node name="Prop" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9206, 0.497207, 0 )
+[node name="HTerrainDetailLayer" type="Spatial" parent="HTerrain"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_icon": ExtResource( 10 )
+}
+layer_index = 0
+texture = ExtResource( 11 )
+view_distance = 100.0
+custom_shader = null
+density = 4.0
+shader_params/u_terrain_normal_basis = Basis( 4, 0, 0, 0, 4, 0, 0, 0, 4 )
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+
+[node name="Prop" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9206, 0.810704, 0 )
 script = ExtResource( 5 )
 PROP_TEXTURE = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Prop"]
-mesh = SubResource( 7 )
-material/0 = SubResource( 9 )
+cast_shadow = 2
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Prop"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.515609, 0 )
-shape = SubResource( 8 )
+[node name="Prop2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70692, 0.810704, -0.595225 )
+script = ExtResource( 5 )
+PROP_TEXTURE = ExtResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Prop2"]
+cast_shadow = 2
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )

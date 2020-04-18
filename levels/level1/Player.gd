@@ -33,7 +33,8 @@ func process_input(delta: float) -> void:
 func process_movement(delta):
 		direction.y = 0
 
-		velocity.y += delta * GRAVITY
+		if not is_on_floor():
+			velocity.y += delta * GRAVITY
 
 		var horizontal_velocity = velocity
 		horizontal_velocity.y = 0
@@ -50,4 +51,4 @@ func process_movement(delta):
 		horizontal_velocity = horizontal_velocity.linear_interpolate(target, acceleration * delta)
 		velocity.x = horizontal_velocity.x
 		velocity.z = horizontal_velocity.z
-		velocity = move_and_slide(velocity, Vector3(0, 1, 0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
+		velocity = move_and_slide(velocity, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))

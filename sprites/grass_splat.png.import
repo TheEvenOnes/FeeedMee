@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.s3tc.stex"
-path.etc2="res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.etc2.stex"
+path.s3tc="res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.s3tc.stex"
+path.etc2="res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://sprites/tree.png"
-dest_files=[ "res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.s3tc.stex", "res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.etc2.stex" ]
+source_file="res://sprites/grass_splat.png"
+dest_files=[ "res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.s3tc.stex", "res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.etc2.stex" ]
 
 [params]
 
@@ -24,7 +24,7 @@ compress/normal_map=0
 flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
-flags/anisotropic=true
+flags/anisotropic=false
 flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false

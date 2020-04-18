@@ -26,14 +26,14 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Feeed Mee"
+config/name="Feeed Meee"
 run/main_scene="res://levels/level1/Level.tscn"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=320
-window/size/height=180
+window/size/width=640
+window/size/height=360
 window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="viewport"
@@ -88,5 +88,5 @@ player_action={
 [rendering]
 
 quality/shadows/filter_mode=2
-quality/filters/msaa=2
+quality/filters/msaa=1
 environment/default_environment="res://default_env.tres"

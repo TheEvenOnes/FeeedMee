@@ -47,7 +47,6 @@ script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707106, 0, 5.30106, 5 )
-projection = 1
 current = true
 size = 6.0
 

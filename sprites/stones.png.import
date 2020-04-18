@@ -14,7 +14,7 @@ dest_files=[ "res://.import/stones.png-4337fe0aaa1025eea26d8b0dfa46d08a.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

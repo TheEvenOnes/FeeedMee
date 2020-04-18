@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.s3tc.stex"
-path.etc2="res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.etc2.stex"
+path="res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://sprites/fence_post.png"
-dest_files=[ "res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.s3tc.stex", "res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.etc2.stex" ]
+dest_files=[ "res://.import/fence_post.png-96787bb6ae9222ec0ad90e1127011c5b.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

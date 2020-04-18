@@ -11,6 +11,7 @@ var velocity = Vector3()
 var direction = Vector3()
 
 onready var ray_cast = $RayCast
+onready var sprite = $AnimatedSprite3D
 
 func _physics_process(delta: float) -> void:
 		process_input(delta)
@@ -66,3 +67,10 @@ func process_movement(delta):
 		velocity.x = horizontal_velocity.x
 		velocity.z = horizontal_velocity.z
 		velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
+
+		if velocity.length_squared() > 0.1:
+			sprite.animation = 'walking'
+		else:
+			sprite.animation = 'idle'
+
+		sprite.flip_h = velocity.x < 0

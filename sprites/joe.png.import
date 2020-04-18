@@ -2,19 +2,21 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wooden_beam.png-49ae2aae4a18f4d38f28a67e2dfddf39.stex"
+path.s3tc="res://.import/joe.png-d182f1d8d33750e2b61eaaaa99897ef3.s3tc.stex"
+path.etc2="res://.import/joe.png-d182f1d8d33750e2b61eaaaa99897ef3.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://sprites/wooden_beam.png"
-dest_files=[ "res://.import/wooden_beam.png-49ae2aae4a18f4d38f28a67e2dfddf39.stex" ]
+source_file="res://sprites/joe.png"
+dest_files=[ "res://.import/joe.png-d182f1d8d33750e2b61eaaaa99897ef3.s3tc.stex", "res://.import/joe.png-d182f1d8d33750e2b61eaaaa99897ef3.etc2.stex" ]
 
 [params]
 
-compress/mode=3
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

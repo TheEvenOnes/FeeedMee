@@ -2,29 +2,29 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.stex"
+path="res://.import/joe-Sheet.png-ee958a238b23f421cb79a008f69f0792.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/tree.png"
-dest_files=[ "res://.import/tree.png-f6c9ce7c15c3646c3c37a737953f3b49.stex" ]
+source_file="res://sprites/joe-Sheet.png"
+dest_files=[ "res://.import/joe-Sheet.png-ee958a238b23f421cb79a008f69f0792.stex" ]
 
 [params]
 
-compress/mode=3
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
-flags/repeat=true
+compress/normal_map=2
+flags/repeat=0
 flags/filter=false
-flags/mipmaps=true
-flags/anisotropic=true
+flags/mipmaps=false
+flags/anisotropic=false
 flags/srgb=1
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

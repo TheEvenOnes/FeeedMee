@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.s3tc.stex"
-path.etc2="res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.etc2.stex"
+path="res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://sprites/grass_splat.png"
-dest_files=[ "res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.s3tc.stex", "res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.etc2.stex" ]
+dest_files=[ "res://.import/grass_splat.png-96acd0162bba50dbee9600a75088ae51.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

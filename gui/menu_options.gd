@@ -61,8 +61,9 @@ func _ready() -> void:
 	selected.add_point(Vector2.ZERO)
 	selected.add_point(Vector2.ZERO)
 
-	selected_ani.current_animation = "sz"
 	selection_state = SelectionState.SELECTING
+
+	refresh_selection_state_ui()
 
 func _input(event: InputEvent) -> void:
 	match selection_state:
@@ -71,6 +72,11 @@ func _input(event: InputEvent) -> void:
 		SelectionState.SELECTING:
 			input_selecting(event)
 
+	refresh_selection_state_ui()
+
+	current_rect = grid_rect(selected_col, selected_row)
+
+func refresh_selection_state_ui() -> void:
 	# Refresh UI based on any changes during state handling.
 	match selection_state:
 		SelectionState.SELECTING:
@@ -80,9 +86,6 @@ func _input(event: InputEvent) -> void:
 		SelectionState.REBINDING:
 			selected_ani.current_animation = "active"
 			instruction.text = "press key to rebind, backspace to clear, esc to cancel"
-
-	current_rect = grid_rect(selected_col, selected_row)
-
 
 func input_rebinding_apply(new_binding: InputEvent) -> void:
 	# Delete binding from current item's action list
@@ -95,7 +98,17 @@ func input_rebinding_apply(new_binding: InputEvent) -> void:
 	for item in items:
 		if item is ActionChangerItem:
 			if InputMap.action_has_event(item.action_name, new_binding):
-				InputMap.action_erase_event(item.action_name, new_binding)
+				var erase: bool = true
+				if new_binding is InputEventJoypadMotion:
+					for act in InputMap.get_action_list(item.action_name):
+						if act is InputEventJoypadMotion and act.axis == new_binding.axis:
+							if (act.axis_value < 0 and new_binding.axis_value > 0) or (act.axis_value > 0 and new_binding.axis_value < 0):
+									# Matching axis, matching event type, but wrong direction.
+									# Don't erase.
+									erase = false
+									break
+				if erase:
+					InputMap.action_erase_event(item.action_name, new_binding)
 
 	# Add new binding to the current item, unless it's a backspace.
 	var skip: bool = false
@@ -118,11 +131,23 @@ func input_rebinding(event: InputEvent) -> void:
 		if event is InputEventKey and event.is_pressed():
 			input_rebinding_apply(event)
 			selection_state = SelectionState.SELECTING
+		if event is InputEventJoypadButton and event.is_pressed():
+			input_rebinding_apply(event)
+			selection_state = SelectionState.SELECTING
+		if event is InputEventJoypadMotion:
+			var evtJM: InputEventJoypadMotion = event
+			if abs(evtJM.axis_value) > 0.5:
+				input_rebinding_apply(event)
+				selection_state = SelectionState.SELECTING
 
 func input_selecting(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		get_tree().current_scene.get_node("Controls_DiskIO").save_config()
+
 		get_parent().add_child(main_menu)
 		get_parent().remove_child(get_node("."))
+
+		return
 
 	#################
 	# handle arrows
@@ -167,7 +192,6 @@ func input_selecting(event: InputEvent) -> void:
 			if selected_row < 0:
 				selected_row = len(items)-1
 			selected_col = items[selected_row].get_column_count()-1
-
 
 	##################
 	# handle accept/select

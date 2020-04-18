@@ -11,7 +11,6 @@ onready var exit = $Exit
 
 onready var all_options = [start, options, exit]
 
-
 enum Item {
 	START = 0,
 	OPTIONS = 1,

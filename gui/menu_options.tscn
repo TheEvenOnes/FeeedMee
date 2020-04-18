@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://gui/action_changer_item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gui/menu_options.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
-resource_name = "sz"
+resource_name = "active"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=2]
 length = 2.0
 loop = true
 tracks/0/type = "bezier"
@@ -29,16 +44,16 @@ tracks/1/keys = {
 }
 
 [node name="MenuPicker" type="VBoxContainer"]
-margin_left = -144.0
+margin_left = -208.0
 margin_top = -73.0
-margin_right = 144.0
-margin_bottom = 13.0
+margin_right = 208.0
+margin_bottom = 31.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
-extra_margin = Vector2( 2.38526, 0 )
+extra_margin = Vector2( 1, 1 )
 
 [node name="Selected" type="Line2D" parent="."]
 width = 0.5
@@ -48,23 +63,30 @@ antialiased = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selected"]
 playback_process_mode = 0
 playback_speed = 1.5
-anims/sz = SubResource( 1 )
+anims/active = SubResource( 1 )
+anims/sz = SubResource( 2 )
+
+[node name="Instruction" type="Label" parent="."]
+margin_right = 416.0
+margin_bottom = 14.0
+text = ".:: change your options ::."
+align = 1
 
 [node name="ActionChanger" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 0.0
-margin_right = 288.0
-margin_bottom = 14.0
+margin_top = 18.0
+margin_right = 416.0
+margin_bottom = 32.0
 
 [node name="ActionChanger2" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 18.0
-margin_right = 288.0
-margin_bottom = 32.0
+margin_top = 36.0
+margin_right = 416.0
+margin_bottom = 50.0
 action_name = "move_down"
 display_name = "Move down"
 
@@ -72,9 +94,9 @@ display_name = "Move down"
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 36.0
-margin_right = 288.0
-margin_bottom = 50.0
+margin_top = 54.0
+margin_right = 416.0
+margin_bottom = 68.0
 action_name = "move_left"
 display_name = "Move left"
 
@@ -82,9 +104,9 @@ display_name = "Move left"
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 54.0
-margin_right = 288.0
-margin_bottom = 68.0
+margin_top = 72.0
+margin_right = 416.0
+margin_bottom = 86.0
 action_name = "move_right"
 display_name = "Move right"
 
@@ -92,8 +114,8 @@ display_name = "Move right"
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 72.0
-margin_right = 288.0
-margin_bottom = 86.0
+margin_top = 90.0
+margin_right = 416.0
+margin_bottom = 104.0
 action_name = "move_jump"
 display_name = "Jump"

@@ -1,6 +1,8 @@
 extends VBoxContainer
 
 onready var selected = $Selected
+onready var selected_ani = $Selected/AnimationPlayer
+onready var instruction = $Instruction
 
 export (Vector2) var extra_margin := Vector2.ZERO
 
@@ -12,6 +14,13 @@ var main_menu: Control  # set by menu.tscn when switching to this scene
 var items: Array
 var current_rect: Rect2
 var current_item: ActionChangerItem  # TODO: may be something else
+
+enum SelectionState {
+	SELECTING,
+	REBINDING,
+}
+
+var selection_state
 
 # Returns the rectangle for the selectable object at coordinates (col, row).
 #
@@ -52,12 +61,21 @@ func _ready() -> void:
 	selected.add_point(Vector2.ZERO)
 	selected.add_point(Vector2.ZERO)
 
-	$Selected/AnimationPlayer.current_animation = "sz"
+	selected_ani.current_animation = "sz"
+	selection_state = SelectionState.SELECTING
 
 func _input(event: InputEvent) -> void:
+	if selection_state == SelectionState.REBINDING:
+		if event.is_action_pressed("ui_cancel"):
+			selection_state = SelectionState.SELECTING
+			return
+
 	if event.is_action_pressed("ui_cancel"):
 		get_parent().add_child(main_menu)
 		get_parent().remove_child(get_node("."))
+
+	#################
+	# handle arrows
 	if event.is_action_pressed("ui_up"):
 		selected_row -= 1
 	if event.is_action_pressed("ui_down"):
@@ -67,6 +85,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_right"):
 		selected_col += 1
 
+	# clear values based on arrows
 	if selected_row < 0:
 		selected_row += len(items)
 	selected_row %= len(items)
@@ -80,6 +99,38 @@ func _input(event: InputEvent) -> void:
 			if selected_col < 0:
 				selected_col += current_item.get_column_count() 
 			selected_col %= current_item.get_column_count()
+
+	#################
+	# handle ui_focus_{next,prev}
+	#
+	# these will nudge selection values into valid ranges themselves
+	if event.is_action_pressed("ui_focus_next"):
+		selected_col += 1
+		if selected_col >= items[selected_row].get_column_count():
+			selected_col = 0
+			selected_row += 1
+			selected_row %= len(items)
+	if event.is_action_pressed("ui_focus_prev"):
+		selected_col -= 1
+		if selected_col < 0:
+			selected_row -= 1
+			if selected_row < 0:
+				selected_row = len(items)-1
+			selected_col = items[selected_row].get_column_count()-1
+
+
+	##################
+	# handle accept/select
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_select"):
+		selection_state = SelectionState.REBINDING
+
+	match selection_state:
+		SelectionState.SELECTING:
+			selected_ani.current_animation = "sz"
+			instruction.text = "choose options to rebind, or esc to exit"
+		SelectionState.REBINDING:
+			selected_ani.current_animation = "active"
+			instruction.text = "press key to rebind, backspace to clear, esc to cancel"
 
 func _process(delta: float):
 	# Find out the desired rect. Use move_toward to update both position and

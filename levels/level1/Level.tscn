@@ -25,23 +25,16 @@ background_color = Color( 0.572549, 0.956863, 0.984314, 1 )
 background_energy = 0.5
 ambient_light_color = Color( 1, 1, 1, 1 )
 fog_enabled = true
-fog_color = Color( 0.580392, 0.72549, 0.294118, 1 )
-fog_sun_color = Color( 1, 1, 1, 1 )
+fog_color = Color( 0.32549, 0.462745, 0.054902, 1 )
+fog_sun_color = Color( 0, 0, 0, 1 )
 fog_depth_begin = 5.0
-fog_depth_curve = 0.68302
+fog_depth_curve = 0.258816
 fog_transmit_curve = 1.51572
 tonemap_exposure = 1.18
 tonemap_white = 1.88
 adjustment_brightness = 0.82
 adjustment_contrast = 1.18
 adjustment_saturation = 1.26
-
-[sub_resource type="CapsuleShape" id=6]
-radius = 0.153746
-height = 0.166701
-
-[sub_resource type="SpatialMaterial" id=12]
-flags_transparent = true
 
 [sub_resource type="QuadMesh" id=7]
 
@@ -62,52 +55,18 @@ albedo_texture = ExtResource( 6 )
 radius = 0.43271
 height = 0.470534
 
+[sub_resource type="CapsuleShape" id=6]
+radius = 0.153746
+height = 0.166701
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+
 [node name="Level" type="Spatial"]
 script = ExtResource( 12 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
-
-[node name="Player" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744342, 0 )
-script = ExtResource( 2 )
-
-[node name="RayCast" type="RayCast" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
-enabled = true
-
-[node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 0.748447, 0.663195, 0, -0.663195, 0.748447, -9.53674e-07, 3.77467, 4.20659 )
-current = true
-fov = 45.0
-size = 4.0
-near = 0.01
-far = 35.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Player"]
-transform = Transform( 1, -2.98023e-08, 2.98023e-08, 7.45058e-08, -7.35137e-08, -1, -4.47035e-08, 1, -1.39091e-08, -2.15431e-16, 0.242554, 7.22867e-09 )
-shape = SubResource( 6 )
-
-[node name="OmniLight" type="OmniLight" parent="Player"]
-transform = Transform( 1, -8.8818e-16, 0, 8.8818e-16, 1, 0, 0, 0, 1, -0.00103343, 0.985556, 0.789484 )
-light_color = Color( 0.988235, 0.984314, 0.968627, 1 )
-light_bake_mode = 0
-shadow_bias = 0.3
-omni_range = 6.0
-omni_attenuation = 0.535887
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.439109, 0 )
-material_override = SubResource( 12 )
-cast_shadow = 0
-pixel_size = 0.03
-billboard = 2
-shaded = true
-alpha_cut = 1
-frames = ExtResource( 15 )
-animation = "idle"
-frame = 1
-playing = true
 
 [node name="HTerrain" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
@@ -197,3 +156,45 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.668, -2.38419e-07, -8.93974 
 
 [node name="LampPost2" parent="Lamps" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458278, -2.38419e-07, -8.81891 )
+
+[node name="Player" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744342, 0 )
+script = ExtResource( 2 )
+
+[node name="RayCast" type="RayCast" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
+enabled = true
+
+[node name="Camera" type="Camera" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 0.748447, 0.663195, 0, -0.663195, 0.748447, -9.53674e-07, 3.77467, 4.20659 )
+current = true
+fov = 45.0
+size = 4.0
+near = 0.01
+far = 35.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( 1, -2.98023e-08, 2.98023e-08, 7.45058e-08, -7.35137e-08, -1, -4.47035e-08, 1, -1.39091e-08, -2.15431e-16, 0.242554, 7.22867e-09 )
+shape = SubResource( 6 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.439109, 0 )
+material_override = SubResource( 12 )
+cast_shadow = 2
+pixel_size = 0.025
+billboard = 1
+shaded = true
+alpha_cut = 1
+frames = ExtResource( 15 )
+animation = "idle"
+frame = 1
+playing = true
+
+[node name="OmniLight" type="OmniLight" parent="Player"]
+transform = Transform( 1, -8.8818e-16, 0, 8.8818e-16, 1, 0, 0, 0, 1, -0.00103343, 0.985556, 0.789484 )
+light_color = Color( 0.988235, 0.984314, 0.968627, 1 )
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.3
+omni_range = 6.0
+omni_attenuation = 0.535887

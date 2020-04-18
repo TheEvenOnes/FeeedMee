@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/Selector.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "pulse"
+length = 2.0
+loop = true
+step = 1.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:SCALE_X")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 4, -0.491574, 0.00348377, 0.491574, -0.00348377, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 2 )
+}
+
+[node name="GUI" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Selector" type="Control" parent="Camera2D"]
+margin_left = -160.0
+margin_top = -88.0
+margin_right = 160.0
+margin_bottom = 88.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Selected" type="Line2D" parent="Camera2D/Selector"]
+width = 0.5
+default_color = Color( 1, 1, 1, 1 )
+joint_mode = 2
+begin_cap_mode = 1
+end_cap_mode = 1
+antialiased = true
+
+[node name="Start" type="Label" parent="Camera2D/Selector"]
+margin_left = 256.0
+margin_top = 104.0
+margin_right = 288.0
+margin_bottom = 118.0
+rect_pivot_offset = Vector2( -96, -16 )
+text = "Start"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="Label" parent="Camera2D/Selector"]
+margin_left = 237.0
+margin_top = 120.0
+margin_right = 288.0
+margin_bottom = 134.0
+rect_pivot_offset = Vector2( -96, -16 )
+text = "Options"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Label" parent="Camera2D/Selector"]
+margin_left = 265.0
+margin_top = 136.0
+margin_right = 288.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( -96, -16 )
+text = "Exit"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/Selector"]
+autoplay = "pulse"
+playback_process_mode = 0
+playback_speed = 1.5
+method_call_mode = 1
+anims/pulse = SubResource( 1 )

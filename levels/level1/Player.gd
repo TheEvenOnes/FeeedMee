@@ -35,7 +35,6 @@ func process_input(delta: float) -> void:
 
 		var can_jump = false
 		var dist = get_distance_to_bottom()
-		print(dist)
 		if dist < 0.1:
 			can_jump = true
 

@@ -25,7 +25,7 @@ func binding_description(act: InputEvent) -> String:
 		return act.as_text()
 	return "unsupported"
 
-func _ready():
+func refresh_labels():
 	display_name_label.text = display_name
 	action_1_label.text = "-"
 	action_2_label.text = "-"
@@ -35,6 +35,9 @@ func _ready():
 	if len(InputMap.get_action_list(action_name)) > 1:
 		var act = InputMap.get_action_list(action_name)[1]
 		action_2_label.text = "[" + binding_description(act) + "]"
+
+func _ready():
+	refresh_labels()
 
 func get_column_count() -> int:
 	return 2

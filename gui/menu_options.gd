@@ -65,11 +65,61 @@ func _ready() -> void:
 	selection_state = SelectionState.SELECTING
 
 func _input(event: InputEvent) -> void:
-	if selection_state == SelectionState.REBINDING:
-		if event.is_action_pressed("ui_cancel"):
-			selection_state = SelectionState.SELECTING
-			return
+	match selection_state:
+		SelectionState.REBINDING:
+			input_rebinding(event)
+		SelectionState.SELECTING:
+			input_selecting(event)
 
+	# Refresh UI based on any changes during state handling.
+	match selection_state:
+		SelectionState.SELECTING:
+			selected.visible = true
+			selected_ani.current_animation = "sz"
+			instruction.text = "choose options to rebind, or esc to exit"
+		SelectionState.REBINDING:
+			selected_ani.current_animation = "active"
+			instruction.text = "press key to rebind, backspace to clear, esc to cancel"
+
+	current_rect = grid_rect(selected_col, selected_row)
+
+
+func input_rebinding_apply(new_binding: InputEvent) -> void:
+	# Delete binding from current item's action list
+	if len(InputMap.get_action_list(current_item.action_name)) > selected_col:
+		InputMap.action_erase_event(
+			current_item.action_name,
+			InputMap.get_action_list(current_item.action_name)[selected_col])
+
+	# Delete this binding from every other handled action.
+	for item in items:
+		if item is ActionChangerItem:
+			if InputMap.action_has_event(item.action_name, new_binding):
+				InputMap.action_erase_event(item.action_name, new_binding)
+
+	# Add new binding to the current item, unless it's a backspace.
+	var skip: bool = false
+	if new_binding is InputEventKey:
+		var new_key: InputEventKey = new_binding
+		if new_key.scancode == KEY_BACKSPACE:
+			skip = true
+	if not skip:
+		InputMap.action_add_event(current_item.action_name, new_binding)
+
+	# Refresh labels
+	for item in items:
+		if item is ActionChangerItem:
+			item.refresh_labels()
+
+func input_rebinding(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		selection_state = SelectionState.SELECTING
+	else:
+		if event is InputEventKey and event.is_pressed():
+			input_rebinding_apply(event)
+			selection_state = SelectionState.SELECTING
+
+func input_selecting(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_parent().add_child(main_menu)
 		get_parent().remove_child(get_node("."))
@@ -124,19 +174,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_select"):
 		selection_state = SelectionState.REBINDING
 
-	match selection_state:
-		SelectionState.SELECTING:
-			selected_ani.current_animation = "sz"
-			instruction.text = "choose options to rebind, or esc to exit"
-		SelectionState.REBINDING:
-			selected_ani.current_animation = "active"
-			instruction.text = "press key to rebind, backspace to clear, esc to cancel"
-
 func _process(delta: float):
 	# Find out the desired rect. Use move_toward to update both position and
 	# end of the rect (its two opposing corners).
 	var new_rect = grid_rect(selected_col, selected_row)
-	if current_rect.get_area() < 0.001:
+	if current_rect.get_area() < 0.001 or current_rect.get_area() > 100000:
 		current_rect = new_rect
 	else:
 		current_rect.position = current_rect.position.move_toward(new_rect.position, delta * 200)

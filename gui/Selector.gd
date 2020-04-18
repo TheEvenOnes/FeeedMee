@@ -41,11 +41,11 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if target < 0:
 		target += len(all_options)
-	if Input.is_action_just_pressed('ui_down') or Input.is_action_just_pressed('ui_focus_next'):
+	if event.is_action_pressed('ui_down') or event.is_action_pressed('ui_focus_next'):
 		target = (target + 1) % len(all_options)
-	if Input.is_action_just_pressed('ui_up') or Input.is_action_just_pressed('ui_focus_prev'):
+	if event.is_action_pressed('ui_up') or event.is_action_pressed('ui_focus_prev'):
 		target = (target - 1) % len(all_options)
-	if Input.is_action_just_pressed('ui_accept') or Input.is_action_just_pressed('ui_select'):
+	if event.is_action_pressed('ui_accept') or event.is_action_pressed('ui_select'):
 		# replace_by does the wrong thing, seemingly.
 		#
 		# Instead, we create the replacement scene, teach it what to replace

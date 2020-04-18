@@ -119,3 +119,13 @@ margin_right = 416.0
 margin_bottom = 104.0
 action_name = "move_jump"
 display_name = "Jump"
+
+[node name="ActionChanger6" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 108.0
+margin_right = 416.0
+margin_bottom = 122.0
+action_name = "player_action"
+display_name = "Player Action"

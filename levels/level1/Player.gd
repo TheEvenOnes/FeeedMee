@@ -10,9 +10,18 @@ export (float) var MAX_SLOPE_ANGLE = 30
 var velocity = Vector3()
 var direction = Vector3()
 
+onready var ray_cast = $RayCast
+
 func _physics_process(delta: float) -> void:
 		process_input(delta)
 		process_movement(delta)
+
+func get_distance_to_bottom() -> float:
+	if ray_cast != null:
+		var collider = ray_cast.get_collider()
+		if collider != null:
+			return (global_transform.origin - ray_cast.get_collision_point()).length_squared()
+	return 100.0
 
 func process_input(delta: float) -> void:
 		direction = Vector3()
@@ -24,7 +33,13 @@ func process_input(delta: float) -> void:
 		input_movement_vector.x -= Input.get_action_strength('move_left')
 		input_movement_vector.x += Input.get_action_strength('move_right')
 
-		if is_on_floor():
+		var can_jump = false
+		var dist = get_distance_to_bottom()
+		print(dist)
+		if dist < 0.1:
+			can_jump = true
+
+		if is_on_floor() or can_jump:
 				if Input.is_action_just_pressed('move_jump'):
 						velocity.y = JUMP_SPEED
 
@@ -51,4 +66,4 @@ func process_movement(delta):
 		horizontal_velocity = horizontal_velocity.linear_interpolate(target, acceleration * delta)
 		velocity.x = horizontal_velocity.x
 		velocity.z = horizontal_velocity.z
-		velocity = move_and_slide(velocity, Vector3(0, 1, 0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+		velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(MAX_SLOPE_ANGLE))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -15,6 +15,10 @@
 [ext_resource path="res://objects/Fence.tscn" type="PackedScene" id=13]
 [ext_resource path="res://objects/LampPost.tscn" type="PackedScene" id=14]
 [ext_resource path="res://sprites/joe.tres" type="SpriteFrames" id=15]
+[ext_resource path="res://levels/level1/SFX.gd" type="Script" id=16]
+[ext_resource path="res://sound/walk_step.wav" type="AudioStream" id=17]
+[ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=18]
+[ext_resource path="res://sound/eating_short.wav" type="AudioStream" id=19]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -194,7 +198,6 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -207,3 +210,18 @@ shadow_bias = 0.1
 spot_range = 16.0
 spot_attenuation = 1.31951
 spot_angle_attenuation = 4.0
+
+[node name="SFX" type="Node" parent="."]
+script = ExtResource( 16 )
+
+[node name="WalStep" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 17 )
+bus = "SFX"
+
+[node name="DeadCow" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 18 )
+bus = "SFX"
+
+[node name="Eating" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 19 )
+bus = "SFX"

@@ -9,7 +9,7 @@ export (float) var feedSoundsFreq = 10
 func _ready():
 	_playerWalking = false
 	_playerWalkingTime = 0
-	_nextFeedSnd = 0
+	_nextFeedSnd = feedSoundsFreq
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

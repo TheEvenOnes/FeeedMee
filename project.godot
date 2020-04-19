@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "HBoxContainer",
+"base": "GenericItemRow",
 "class": "ActionChangerItem",
 "language": "GDScript",
 "path": "res://gui/action_changer_item.gd"
+}, {
+"base": "Spatial",
+"class": "ControlsDiskIO",
+"language": "GDScript",
+"path": "res://gui/controls_diskio.gd"
+}, {
+"base": "HBoxContainer",
+"class": "GenericItemRow",
+"language": "GDScript",
+"path": "res://gui/generic_item_row.gd"
 }, {
 "base": "ResourceFormatLoader",
 "class": "HTerrainDataLoader",
@@ -30,7 +40,9 @@ _global_script_classes=[ {
 "path": "res://levels/level1/SFX.gd"
 } ]
 _global_script_class_icons={
-"ActionChangerItem": "res://icon.png",
+"ActionChangerItem": "",
+"ControlsDiskIO": "",
+"GenericItemRow": "res://icon.png",
 "HTerrainDataLoader": "",
 "HTerrainDataSaver": "",
 "SoundFX": ""

@@ -1,6 +1,6 @@
-extends HBoxContainer
+extends GenericItemRow
 
-class_name ActionChangerItem, "res://icon.png"
+class_name ActionChangerItem
 
 export (String) var action_name = "move_up"
 export (String) var display_name = "Move up"

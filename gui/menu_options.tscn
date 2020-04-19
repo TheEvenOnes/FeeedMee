@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://gui/action_changer_item.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gui/menu_options.gd" type="Script" id=2]
+[ext_resource path="res://gui/reset_to_default.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "active"
@@ -129,3 +130,14 @@ margin_right = 416.0
 margin_bottom = 122.0
 action_name = "player_action"
 display_name = "Player Action"
+
+[node name="ResetToDefault" type="HBoxContainer" parent="."]
+margin_top = 126.0
+margin_right = 416.0
+margin_bottom = 140.0
+script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="ResetToDefault"]
+margin_right = 157.0
+margin_bottom = 14.0
+text = "Reset controls to default"

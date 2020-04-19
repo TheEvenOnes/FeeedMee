@@ -10,10 +10,14 @@ var selected_col: int = 0
 var selected_row: int = 0
 
 var main_menu: Control  # set by menu.tscn when switching to this scene
+var diskio: ControlsDiskIO
 
 var items: Array
 var current_rect: Rect2
-var current_item: ActionChangerItem  # TODO: may be something else
+var current_item: GenericItemRow  # TODO: may be something else
+
+var notification: String
+var notification_timeout: float
 
 enum SelectionState {
 	SELECTING,
@@ -27,7 +31,7 @@ var selection_state
 # 'row' refers to a particular item out of array 'items'; 'col' refers to
 # selectable columns inside that row.
 func grid_rect(col: int, row: int) -> Rect2:
-	var item: ActionChangerItem = items[row]
+	var item: GenericItemRow = items[row]
 	var cntrl: Control = item.get_column(col)
 	return Rect2(
 		cntrl.get_global_rect().position - cntrl.get_parent().get_parent().get_global_rect().position,
@@ -40,7 +44,7 @@ func update_selected(rect: Rect2) -> void:
 	var r = rect.end.x + extra_margin.x
 	var t = rect.end.y + extra_margin.y
 	var b = rect.position.y - extra_margin.y
-	
+
 	selected.set_point_position(0, Vector2(l, t))
 	selected.set_point_position(1, Vector2(r, t))
 	selected.set_point_position(2, Vector2(r, b))
@@ -49,8 +53,10 @@ func update_selected(rect: Rect2) -> void:
 	selected.set_point_position(5, Vector2(r, t)) # deals with the problem in the corner, closing the loop
 
 func _ready() -> void:
+	diskio = get_tree().current_scene.get_node("Controls_DiskIO")
+
 	for child in get_children():
-		if child is ActionChangerItem:
+		if child is GenericItemRow:
 			items.append(child)
 
 	selected.clear_points()
@@ -87,6 +93,9 @@ func refresh_selection_state_ui() -> void:
 			selected_ani.current_animation = "active"
 			instruction.text = "press key to rebind, backspace to clear, esc to cancel"
 
+	if notification_timeout > 0:
+		instruction.text = notification
+
 func input_rebinding_apply(new_binding: InputEvent) -> void:
 	# Delete binding from current item's action list
 	if len(InputMap.get_action_list(current_item.action_name)) > selected_col:
@@ -119,10 +128,12 @@ func input_rebinding_apply(new_binding: InputEvent) -> void:
 	if not skip:
 		InputMap.action_add_event(current_item.action_name, new_binding)
 
+	refresh_item_labels()
+
+func refresh_item_labels() -> void:
 	# Refresh labels
 	for item in items:
-		if item is ActionChangerItem:
-			item.refresh_labels()
+		item.refresh_labels()
 
 func input_rebinding(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -142,7 +153,7 @@ func input_rebinding(event: InputEvent) -> void:
 
 func input_selecting(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().current_scene.get_node("Controls_DiskIO").save_config()
+		diskio.save_config(null)
 
 		get_parent().add_child(main_menu)
 		get_parent().remove_child(get_node("."))
@@ -172,7 +183,7 @@ func input_selecting(event: InputEvent) -> void:
 			selected_col = 0
 		else:
 			if selected_col < 0:
-				selected_col += current_item.get_column_count() 
+				selected_col += current_item.get_column_count()
 			selected_col %= current_item.get_column_count()
 
 	#################
@@ -196,7 +207,10 @@ func input_selecting(event: InputEvent) -> void:
 	##################
 	# handle accept/select
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_select"):
-		selection_state = SelectionState.REBINDING
+		if current_item is ActionChangerItem:
+			selection_state = SelectionState.REBINDING
+		else:
+			current_item.activate()
 
 func _process(delta: float):
 	# Find out the desired rect. Use move_toward to update both position and
@@ -209,3 +223,10 @@ func _process(delta: float):
 		current_rect.end = current_rect.end.move_toward(new_rect.end, delta * 200)
 
 	update_selected(current_rect)
+
+	if notification_timeout > 0 and notification != "":
+		notification_timeout -= delta
+
+		if notification_timeout <= 0:
+			notification = ""
+			refresh_selection_state_ui()

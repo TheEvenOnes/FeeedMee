@@ -1,13 +1,24 @@
 extends Spatial
 
+class_name ControlsDiskIO
+
 const INPUT_ACTIONS = [ "move_up", "move_down", "move_left", "move_right", "move_jump", "player_action"]
 const CONFIG_FILE = "user://input.cfg"
 
-func save_config() -> void:
-	var config = ConfigFile.new()
-	var err = config.load(CONFIG_FILE)
-	if err:
-		print("Error code when loading config file: ", err, " (continuing anyway)")
+func reset_config(config: ConfigFile) -> void:
+	config.set_value("input", "move_up", "[{\"kind\":\"key\",\"scancode\":\"W\"},{\"axis\":\"1\",\"dir\":\"-1\",\"kind\":\"joypad_motion\"}]")
+	config.set_value("input", "move_down", "[{\"kind\":\"key\",\"scancode\":\"S\"},{\"axis\":\"1\",\"dir\":\"1\",\"kind\":\"joypad_motion\"}]")
+	config.set_value("input", "move_left", "[{\"kind\":\"key\",\"scancode\":\"A\"},{\"axis\":\"0\",\"dir\":\"-1\",\"kind\":\"joypad_motion\"}]")
+	config.set_value("input", "move_right", "[{\"kind\":\"key\",\"scancode\":\"D\"},{\"axis\":\"0\",\"dir\":\"1\",\"kind\":\"joypad_motion\"}]")
+	config.set_value("input", "move_jump", "[{\"button\":\"0\",\"kind\":\"joypad_button\"},{\"kind\":\"key\",\"scancode\":\"Space\"}]")
+	config.set_value("input", "player_action", "[{\"kind\":\"key\",\"scancode\":\"Enter\"},{\"button\":\"2\",\"kind\":\"joypad_button\"}]")
+
+func save_config(config: ConfigFile) -> void:
+	if !config:
+		config = ConfigFile.new()
+		var err = config.load(CONFIG_FILE)
+		if err:
+			print("Error code when loading config file: ", err, " (continuing anyway)")
 
 	for action_name in INPUT_ACTIONS:
 		save_action_to_config(config, action_name)
@@ -76,41 +87,25 @@ func _ready() -> void:
 # Load/save input mapping to a config file
 # Changes done while testing the demo will be persistent, saved to CONFIG_FILE
 
-func load_config():
+func load_config() -> ConfigFile:
 	var config = ConfigFile.new()
 	var err = config.load(CONFIG_FILE)
 	if err: # Assuming that file is missing, generate default config
 		print("generating default config file because loading failed: ", err)
-		save_config()
-	else: # ConfigFile was properly loaded, initialize InputMap
-		for action_name in config.get_section_keys("input"):
-			
-			InputMap.action_erase_events(action_name)
-			var jsn: String = config.get_value("input", action_name)
-			print("for action ", action_name, " loading ", jsn)
-			for enc in parse_json(jsn):
-				var act = dict_to_action(enc)
-				InputMap.action_add_event(action_name, act)
-			
-#			# Get the key scancode corresponding to the saved human-readable string
-#			var scancode = OS.find_scancode_from_string(config.get_value("input", action_name))
-#			# Create a new event object based on the saved scancode
-#			var event = InputEventKey.new()
-#			event.scancode = scancode
-#			# Replace old action (key) events by the new one
-#			for old_event in InputMap.get_action_list(action_name):
-#				if old_event is InputEventKey:
-#					InputMap.action_erase_event(action_name, old_event)
-#			InputMap.action_add_event(action_name, event)
+		reset_config(config)
+		err = null
 
-#
-#func save_to_config(section, key, value):
-#	"""Helper function to redefine a parameter in the settings file"""
-#	var config = ConfigFile.new()
-#	var err = config.load(CONFIG_FILE)
-#	if err:
-#		print("Error code when loading config file: ", err)
-#	else:
-#		config.set_value(section, key, value)
-#		config.save(CONFIG_FILE)
+	# ConfigFile was properly loaded or generated from reset; initialize InputMap
+	if !err:
+		process_config(config)
 
+	return config
+
+func process_config(config: ConfigFile) -> void:
+	for action_name in config.get_section_keys("input"):
+		InputMap.action_erase_events(action_name)
+		var jsn: String = config.get_value("input", action_name)
+		print("for action ", action_name, " loading ", jsn)
+		for enc in parse_json(jsn):
+			var act = dict_to_action(enc)
+			InputMap.action_add_event(action_name, act)

@@ -80,8 +80,6 @@ environment = SubResource( 2 )
 [node name="HTerrain" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
 script = ExtResource( 1 )
-collision_enabled = true
-ambient_wind = 0.0
 lod_scale = 3.0
 map_scale = Vector3( 0.25, 0.25, 0.25 )
 _terrain_data = ExtResource( 3 )
@@ -110,7 +108,6 @@ texture = ExtResource( 11 )
 view_distance = 100.0
 custom_shader = null
 density = 4.0
-shader_params/u_terrain_normal_basis = Basis( 4, 0, 0, 0, 4, 0, 0, 0, 4 )
 shader_params/u_globalmap_tint_bottom = 0.182
 shader_params/u_globalmap_tint_top = 0.737
 shader_params/u_bottom_ao = 0.202

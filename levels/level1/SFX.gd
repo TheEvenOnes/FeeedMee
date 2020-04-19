@@ -10,6 +10,7 @@ func _ready():
 	_playerWalking = false
 	_playerWalkingTime = 0
 	_nextFeedSnd = feedSoundsFreq
+	$BGM.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

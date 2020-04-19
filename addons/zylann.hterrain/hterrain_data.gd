@@ -294,7 +294,7 @@ func get_interpolated_height_at(pos: Vector3) -> float:
 func get_heights_region(x0: int, y0: int, w: int, h: int) -> PoolRealArray:
 	var im = get_image(CHANNEL_HEIGHT)
 	assert(im != null)
-	
+
 	var min_x := Util.clamp_int(x0, 0, im.get_width())
 	var min_y := Util.clamp_int(y0, 0, im.get_height())
 	var max_x := Util.clamp_int(x0 + w, 0, im.get_width() + 1)
@@ -332,7 +332,7 @@ func get_all_heights() -> PoolRealArray:
 # Call this function after you end modifying a map.
 # It will commit the change to the GPU so the change will take effect.
 # In the editor, it will also mark the map as modified so it will be saved when needed.
-# Finally, it will emit `region_changed`, 
+# Finally, it will emit `region_changed`,
 # which allows other systems to catch up (like physics or grass)
 #
 # p_rect: modified area.
@@ -340,12 +340,12 @@ func get_all_heights() -> PoolRealArray:
 # index: index of the map that changed
 func notify_region_change(p_rect: Rect2, channel: int, index := 0):
 	assert(channel >= 0 and channel < CHANNEL_COUNT)
-	
+
 	var min_x := int(p_rect.position.x)
 	var min_y := int(p_rect.position.y)
 	var size_x := int(p_rect.size.x)
 	var size_y := int(p_rect.size.y)
-	
+
 	if channel == CHANNEL_HEIGHT:
 		assert(index == 0)
 		# TODO when drawing very large patches,
@@ -529,7 +529,7 @@ func _upload_region(channel: int, index: int, min_x: int, min_y: int, size_x: in
 
 	else:
 		if VisualServer.has_method("texture_set_data_partial"):
-			
+
 			VisualServer.texture_set_data_partial( \
 				texture.get_rid(), image, \
 				min_x, min_y, \
@@ -766,7 +766,7 @@ func _update_vertical_bounds(origin_in_cells_x: int, origin_in_cells_y: int, \
 
 func _compute_vertical_bounds_at(
 	origin_x: int, origin_y: int, size_x: int, size_y: int, out_b: VerticalBounds):
-	
+
 	var heights = get_image(CHANNEL_HEIGHT)
 	assert(heights != null)
 	var r = _image_utils.get_red_range(heights, Rect2(origin_x, origin_y, size_x, size_y))
@@ -953,7 +953,7 @@ func _save_channel(dir_path: String, channel: int, index: int) -> bool:
 	if im == null:
 		var tex = map.texture
 		if tex != null:
-			_logger.debug(str("Image not found for channel ", channel, 
+			_logger.debug(str("Image not found for channel ", channel,
 				", downloading from VRAM"))
 			im = tex.get_data()
 		else:
@@ -1139,7 +1139,7 @@ static func _try_delete_0_8_0_heightmap(fpath: String, logger):
 #
 # TODO Plan is to make this function threaded, in case import takes too long.
 # So anything that could mess with the main thread should be avoided.
-# Eventually, it would be temporarily removed from the terrain node to work 
+# Eventually, it would be temporarily removed from the terrain node to work
 # in isolation during import.
 func _edit_import_maps(input: Dictionary) -> bool:
 	assert(typeof(input) == TYPE_DICTIONARY)

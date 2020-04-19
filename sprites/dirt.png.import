@@ -2,29 +2,29 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/normal.png-d9d3a3e6374b627249e370b9cbaef8d6.stex"
+path="res://.import/dirt.png-3ed09a4c6a83c7f4889244248e493b92.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/level1/terrain_data/normal.png"
-dest_files=[ "res://.import/normal.png-d9d3a3e6374b627249e370b9cbaef8d6.stex" ]
+source_file="res://sprites/dirt.png"
+dest_files=[ "res://.import/dirt.png-3ed09a4c6a83c7f4889244248e493b92.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=true
+flags/repeat=true
+flags/filter=false
 flags/mipmaps=false
-flags/anisotropic=false
-flags/srgb=2
-process/fix_alpha_border=false
+flags/anisotropic=true
+flags/srgb=1
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

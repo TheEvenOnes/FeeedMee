@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/color.png-8e56209e343b44fb6111c046212cad86.stex"
+path="res://.import/pebbles.png-919a0c8c23ca4d95164336f4b49b4c0b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/level1/terrain_data/color.png"
-dest_files=[ "res://.import/color.png-8e56209e343b44fb6111c046212cad86.stex" ]
+source_file="res://sprites/pebbles.png"
+dest_files=[ "res://.import/pebbles.png-919a0c8c23ca4d95164336f4b49b4c0b.stex" ]
 
 [params]
 
@@ -19,12 +19,12 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=true
-flags/mipmaps=false
+flags/repeat=true
+flags/filter=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=1
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

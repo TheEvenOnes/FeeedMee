@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://levels/level1/TigerPlant.gd" type="Script" id=1]
+[ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=2]
+[ext_resource path="res://sprites/tiger-plant.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://actors/SoundPlayer.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.0808372
+height = 1.90343
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_albedo_tex_force_srgb = true
+params_cull_mode = 2
+params_depth_draw_mode = 3
+params_billboard_mode = 2
+
+[sub_resource type="SphereShape" id=3]
+radius = 0.927531
+
+[node name="TigerPlant" type="KinematicBody"]
+script = ExtResource( 1 )
+SPRITE = ExtResource( 3 )
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193668, 0 )
+enabled = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( -1, 2.98023e-08, -1.17225e-07, -1.61928e-07, 7.35137e-08, 1, -4.47035e-08, 1, -1.39091e-08, 0, 0.957782, 7.22867e-09 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0519981, 0.719466, 0 )
+material_override = SubResource( 2 )
+cast_shadow = 2
+pixel_size = 0.025
+billboard = 1
+transparent = false
+shaded = true
+alpha_cut = 2
+frames = ExtResource( 3 )
+animation = "idle"
+frame = 1
+playing = true
+
+[node name="Devouring" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -50.0
+script = ExtResource( 4 )
+FREQUENCY = 2.0
+
+[node name="FoodScanner" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="FoodScanner"]
+shape = SubResource( 3 )

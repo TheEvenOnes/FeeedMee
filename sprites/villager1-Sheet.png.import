@@ -19,8 +19,13 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
+<<<<<<< HEAD
 flags/repeat=true
 flags/filter=false
+=======
+flags/repeat=0
+flags/filter=true
+>>>>>>> 61034d3... Base TigerPlant behaviour
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -30,5 +35,9 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
+<<<<<<< HEAD
 detect_3d=false
+=======
+detect_3d=true
+>>>>>>> 61034d3... Base TigerPlant behaviour
 svg/scale=1.0

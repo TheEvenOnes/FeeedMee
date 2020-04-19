@@ -10,6 +10,7 @@ height = 0.382087
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
+flags_albedo_tex_force_srgb = true
 params_cull_mode = 2
 params_depth_draw_mode = 3
 
@@ -18,6 +19,7 @@ data = PoolByteArray( 199, 255, 240, 255, 250, 255, 156, 255, 76, 0, 245, 255, 2
 format = 1
 
 [node name="Animal" type="KinematicBody" groups=[
+"food",
 "holdable",
 ]]
 script = ExtResource( 1 )

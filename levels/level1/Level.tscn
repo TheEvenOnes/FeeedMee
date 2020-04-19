@@ -7,6 +7,7 @@
 [ext_resource path="res://objects/BlockerProp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sound/game_music.ogg" type="AudioStream" id=6]
 [ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=6]
+[ext_resource path="res://actors/TigerPlant.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sprites/stones.png" type="Texture" id=7]
 [ext_resource path="res://sprites/grass_splat.png" type="Texture" id=8]
 [ext_resource path="res://sprites/grass.png" type="Texture" id=9]
@@ -54,6 +55,7 @@ radius = 0.207773
 height = 0.098466
 
 [sub_resource type="SpatialMaterial" id=4]
+flags_albedo_tex_force_srgb = true
 params_cull_mode = 2
 params_depth_draw_mode = 3
 params_use_alpha_scissor = true
@@ -156,7 +158,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.526354, 0.0117109, -2.03734 
 [node name="LampPost2" parent="Lamps" instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458278, -2.38419e-07, -8.81891 )
 
-[node name="Player" type="KinematicBody" parent="."]
+[node name="Player" type="KinematicBody" parent="." groups=[
+"food",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744342, 0 )
 script = ExtResource( 2 )
 MAX_SPEED = 7.0
@@ -301,6 +305,24 @@ MAX_HUNGER = 3.0
 AI_DECISION_SPEED = 2.0
 GRAVITY = -24.8
 DEACCEL = 16.0
+
+[node name="TigerPlant" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30323, 0.0512025, -4.11501 )
+
+[node name="Animals" type="Spatial" parent="."]
+
+[node name="Cow1" parent="Animals" instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300506, 0.385901, -9.69358 )
+
+[node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33151, 0.385901, -10.0444 )
+
+[node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.861684, 0.711301, -11.5628 )
+
+[node name="Pig1" parent="Animals" instance=ExtResource( 20 )]
+transform = Transform( 0.599424, 0, 0, 0, 0.599424, 0, 0, 0, 1, 0.861684, 0.581083, -10.8053 )
+SPRITE = ExtResource( 23 )
 
 [node name="GUIOverlay" type="Control" parent="."]
 margin_right = 640.0

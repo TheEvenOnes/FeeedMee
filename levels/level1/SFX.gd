@@ -36,7 +36,7 @@ func _playerWalkingPlay(delta):
 	_playerWalkingTime += delta
 	if _playerWalkingTime > playerWalkFreq:
 		_playerWalkingTime = 0
-	
+
 var _eatCow:bool
 var _eatCowTime:float
 

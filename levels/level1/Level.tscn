@@ -16,11 +16,11 @@
 [ext_resource path="res://objects/LampPost.tscn" type="PackedScene" id=14]
 [ext_resource path="res://sprites/joe.tres" type="SpriteFrames" id=15]
 
-[sub_resource type="ProceduralSky" id=13]
+[sub_resource type="ProceduralSky" id=1]
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 13 )
+background_sky = SubResource( 1 )
 background_color = Color( 0.572549, 0.956863, 0.984314, 1 )
 background_energy = 0.5
 ambient_light_color = Color( 1, 1, 1, 1 )
@@ -36,31 +36,36 @@ adjustment_brightness = 0.82
 adjustment_contrast = 1.18
 adjustment_saturation = 1.26
 
-[sub_resource type="QuadMesh" id=7]
+[sub_resource type="QuadMesh" id=3]
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=4]
 params_billboard_mode = 2
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.98
 albedo_texture = ExtResource( 6 )
 
-[sub_resource type="QuadMesh" id=9]
+[sub_resource type="QuadMesh" id=5]
+size = Vector2( 1.5, 1.5 )
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=6]
 flags_transparent = true
+params_cull_mode = 2
+params_depth_draw_mode = 3
 params_billboard_mode = 2
 albedo_texture = ExtResource( 6 )
 
-[sub_resource type="CapsuleShape" id=11]
-radius = 0.43271
-height = 0.470534
+[sub_resource type="CapsuleShape" id=7]
+radius = 0.327816
+height = 0.835843
 
-[sub_resource type="CapsuleShape" id=6]
+[sub_resource type="CapsuleShape" id=8]
 radius = 0.153746
 height = 0.166701
 
-[sub_resource type="SpatialMaterial" id=12]
-flags_transparent = true
+[sub_resource type="SpatialMaterial" id=9]
+params_depth_draw_mode = 3
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.5
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 12 )
@@ -104,9 +109,9 @@ view_distance = 100.0
 custom_shader = null
 density = 4.0
 shader_params/u_terrain_normal_basis = Basis( 4, 0, 0, 0, 4, 0, 0, 0, 4 )
-shader_params/u_globalmap_tint_bottom = null
-shader_params/u_globalmap_tint_top = null
-shader_params/u_bottom_ao = null
+shader_params/u_globalmap_tint_bottom = 0.182
+shader_params/u_globalmap_tint_top = 0.737
+shader_params/u_bottom_ao = 0.202
 
 [node name="Prop" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9206, 0.810704, 0 )
@@ -115,8 +120,8 @@ PROP_TEXTURE = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Prop"]
 cast_shadow = 2
-mesh = SubResource( 7 )
-material/0 = SubResource( 8 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
 
 [node name="Tree" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04469, 0.810704, -1.78696 )
@@ -124,13 +129,14 @@ script = ExtResource( 5 )
 PROP_TEXTURE = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Tree"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175114, 0 )
 cast_shadow = 2
-mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Tree"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.112638, 0 )
-shape = SubResource( 11 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.146327, 0 )
+shape = SubResource( 7 )
 
 [node name="Fences" type="Spatial" parent="."]
 
@@ -166,7 +172,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 enabled = true
 
 [node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 0.748447, 0.663195, 0, -0.663195, 0.748447, -9.53674e-07, 3.77467, 4.20659 )
+transform = Transform( 1, 0, 0, 0, 0.848953, 0.528468, 0, -0.528468, 0.848953, -9.53674e-07, 2.77467, 4.88012 )
 current = true
 fov = 45.0
 size = 4.0
@@ -175,26 +181,29 @@ far = 35.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1, -2.98023e-08, 2.98023e-08, 7.45058e-08, -7.35137e-08, -1, -4.47035e-08, 1, -1.39091e-08, -2.15431e-16, 0.242554, 7.22867e-09 )
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.439109, 0 )
-material_override = SubResource( 12 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36926, 0 )
+material_override = SubResource( 9 )
 cast_shadow = 2
 pixel_size = 0.025
 billboard = 1
+transparent = false
 shaded = true
-alpha_cut = 1
+alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
 frame = 1
 playing = true
 
-[node name="OmniLight" type="OmniLight" parent="Player"]
-transform = Transform( 1, -8.8818e-16, 0, 8.8818e-16, 1, 0, 0, 0, 1, -0.00103343, 0.985556, 0.789484 )
+[node name="Spot" type="SpotLight" parent="Player"]
+transform = Transform( 1, -1.14939e-16, -4.28958e-16, 4.4409e-16, 0.258819, 0.965926, 1.05879e-22, -0.965926, 0.258819, 0, 5.316, 2.61207 )
 light_color = Color( 0.988235, 0.984314, 0.968627, 1 )
+light_indirect_energy = 2.0
 light_bake_mode = 0
 shadow_enabled = true
-shadow_bias = 0.3
-omni_range = 6.0
-omni_attenuation = 0.535887
+shadow_bias = 0.1
+spot_range = 16.0
+spot_attenuation = 1.31951
+spot_angle_attenuation = 4.0

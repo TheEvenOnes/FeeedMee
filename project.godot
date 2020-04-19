@@ -54,6 +54,10 @@ config/name="Feeed Mee"
 run/main_scene="res://gui/menu_root.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://global/global.tscn"
+
 [display]
 
 window/size/width=640

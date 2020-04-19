@@ -25,7 +25,6 @@ onready var t = get_current().margin_top
 onready var r = get_current().margin_right
 onready var b = get_current().margin_bottom
 
-const LEVEL_1 = preload("res://levels/level1/Level.tscn")
 const MENU_OPTIONS = preload("res://gui/menu_options.tscn")
 
 func _ready() -> void:
@@ -52,7 +51,7 @@ func _input(event: InputEvent) -> void:
 		# ourselves.
 		match target:
 			Item.START:
-				get_tree().change_scene_to(LEVEL_1)
+				get_node("/root/Global").goto_scene("res://levels/level1/Level.tscn")
 			Item.OPTIONS:
 				# TODO: should this be instantiated only once and reused?
 				var inst := MENU_OPTIONS.instance()

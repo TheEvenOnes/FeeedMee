@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://levels/level1/Animal.gd" type="Script" id=1]
+[ext_resource path="res://sprites/cow.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://sound/walk_step.wav" type="AudioStream" id=3]
+[ext_resource path="res://actors/SoundPlayer.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.207773
+height = 0.382087
+
+[sub_resource type="SpatialMaterial" id=2]
+params_cull_mode = 2
+params_depth_draw_mode = 3
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.5
+
+[node name="Animal" type="KinematicBody"]
+script = ExtResource( 1 )
+MAX_TIRED = 4.0
+MAX_SPEED = 0.2
+ACCEL = 1.5
+MAX_SLOPE_ANGLE = 20.0
+SPRITE = ExtResource( 2 )
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193668, 0 )
+enabled = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( -1.18217e-07, 7.35137e-08, 1, 1, -2.98023e-08, 7.35137e-08, -4.47035e-08, 1, -1.39091e-08, 0, 0.196638, 7.22867e-09 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36926, 0 )
+material_override = SubResource( 2 )
+cast_shadow = 2
+pixel_size = 0.025
+billboard = 1
+transparent = false
+shaded = true
+alpha_cut = 2
+frames = ExtResource( 2 )
+animation = "idle"
+playing = true
+
+[node name="Walking" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -50.0
+script = ExtResource( 4 )
+FREQUENCY = 2.0

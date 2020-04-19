@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://gui/loading.gd" type="Script" id=1]
+
+[node name="Loader" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = -35.0803
+margin_top = -169.163
+margin_right = 696.92
+margin_bottom = 562.837
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 35.0
+margin_top = 332.0
+margin_right = 675.0
+margin_bottom = 367.0
+text = "Loadin'
+"
+align = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel"]
+margin_left = 283.08
+margin_top = 361.163
+margin_right = 430.08
+margin_bottom = 375.163

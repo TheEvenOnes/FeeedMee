@@ -15,6 +15,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_playerWalkingPlay(delta)
+	#_eatCow(delta)
 
 func playerWalking(status:bool):
 	if _playerWalking == status:
@@ -34,3 +35,5 @@ func _playerWalkingPlay(delta):
 	if _playerWalkingTime > playerWalkFreq:
 		_playerWalkingTime = 0
 	
+func _eatCow(delta):
+	pass

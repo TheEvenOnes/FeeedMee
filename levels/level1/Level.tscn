@@ -18,7 +18,7 @@
 [ext_resource path="res://levels/level1/SFX.gd" type="Script" id=16]
 [ext_resource path="res://sound/walk_step.wav" type="AudioStream" id=17]
 [ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=18]
-[ext_resource path="res://sound/eating_short.wav" type="AudioStream" id=19]
+[ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=19]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -215,12 +215,12 @@ script = ExtResource( 16 )
 [node name="WalkStep" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 17 )
 volume_db = -25.0
-bus = "SFX"
+bus = "SFXPlaye"
 
 [node name="DeadCow" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 18 )
-bus = "SFX"
+bus = "SFXPlant"
 
 [node name="Eating" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 19 )
-bus = "SFX"
+bus = "SFXPlant"

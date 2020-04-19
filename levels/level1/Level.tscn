@@ -70,6 +70,7 @@ radius = 0.207773
 height = 0.098466
 
 [sub_resource type="SpatialMaterial" id=9]
+params_cull_mode = 2
 params_depth_draw_mode = 3
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.5
@@ -169,6 +170,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458278, -2.38419e-07, -8.81
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744342, 0 )
 script = ExtResource( 2 )
 JUMP_SPEED = 6.0
+MAX_SLOPE_ANGLE = 60.0
 
 [node name="RayCast" type="RayCast" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
@@ -197,7 +199,6 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]

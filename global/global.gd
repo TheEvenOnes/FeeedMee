@@ -53,3 +53,70 @@ func _deferred_goto_scene(path):
 		print('-> telling loading scene about next scene')
 		current_scene.call_deferred('goto_scene', next_scene)
 		print('-> done telling loading scene about next scene')
+
+const Achievements: Dictionary = {
+	'first_piggy': {
+		'sort_id': 0, # Unused; would be used in GUI for achievements
+		'id': 'first_piggy',
+		'name': 'Deliverance!',
+		'desc': 'Deliver the first piggy',
+		'req': 9,
+		'show_every': 3,
+	}
+}
+
+func achieved(id: String) -> int:
+	var ach: Dictionary = Achievements[id]
+	var f: ConfigFile = ConfigFile.new()
+	var err = f.load('user://achievements.cfg')
+	if err != null:
+		# Errors are actually meant to be acceptable.
+		# Default values are set in get_value() calls.
+		pass
+	var complete_count: int = int(f.get_value('progress', id, '0'))
+	return complete_count
+
+func achieve(id: String, complete_count: int) -> void:
+	var ach: Dictionary = Achievements[id]
+
+	var f: ConfigFile = ConfigFile.new()
+	var err = f.load('user://achievements.cfg')
+	if err != null:
+		# Errors are actually meant to be acceptable.
+		# Default values are set in get_value() calls.
+		pass
+
+	var old_complete_count: int = int(f.get_value('progress', id, '0'))
+	if old_complete_count == ach['req']:
+		# Completed previously. There's no further chance of achieving this.
+		return
+
+	if complete_count < old_complete_count:
+		# We can't go back.
+		return
+
+	# Update the saved value.
+	f.set_value('progress', id, String(complete_count))
+
+	# Is it complete yet?
+	if complete_count == ach['req']:
+		show_achievement(ach['name'], ach['desc'], complete_count, ach['req'])
+
+	# When did we last show this?
+	var last_shown_at_count: int = int(f.get_value('last_show_count', id, '-1'))
+	if int(int(last_shown_at_count) / int(ach['show_every'])) != int((complete_count) / (ach['show_every'])):
+		f.set_value('last_show_count', id, String(complete_count))
+		show_achievement(ach['name'], ach['desc'], complete_count, ach['req'])
+	f.save('user://achievements.cfg')
+
+func show_achievement(text: String, desc: String, got: int, req: int):
+	if current_scene.get_node('GUIOverlay') == null:
+		print('no gui overlay, cannot show achievement')
+		return
+	var achievement_panel: AchievementPanel
+	achievement_panel = load('res://gui/achievement_panel.tscn').instance()
+	achievement_panel.text = text
+	achievement_panel.desc = desc
+	if got != req:
+		achievement_panel.title = 'Progress: ' + String(got) + ' / ' + String(req)
+	current_scene.get_node('GUIOverlay').add_child(achievement_panel)

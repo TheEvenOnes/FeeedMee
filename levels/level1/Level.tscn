@@ -253,3 +253,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17819, 0.153235, -11.1794 )
 
 [node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310003, 0.153235, -11.513 )
+
+[node name="GUIOverlay" type="Control" parent="."]
+margin_right = 640.0
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

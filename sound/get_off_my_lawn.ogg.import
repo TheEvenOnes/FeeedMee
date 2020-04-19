@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/get_off_my_lawn.ogg-33aede2dc2fac723e6324674dd07e775.oggstr"
+
+[deps]
+
+source_file="res://sound/get_off_my_lawn.ogg"
+dest_files=[ "res://.import/get_off_my_lawn.ogg-33aede2dc2fac723e6324674dd07e775.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

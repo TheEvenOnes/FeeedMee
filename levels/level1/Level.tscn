@@ -1,12 +1,10 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
 [ext_resource path="res://levels/level1/hterrain/data.hterrain" type="Resource" id=3]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" type="Script" id=4]
 [ext_resource path="res://objects/BlockerProp.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sound/game_music.ogg" type="AudioStream" id=6]
-[ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=6]
 [ext_resource path="res://actors/TigerPlant.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sprites/stones.png" type="Texture" id=7]
 [ext_resource path="res://sprites/grass_splat.png" type="Texture" id=8]
@@ -29,6 +27,7 @@
 [ext_resource path="res://sound/die.ogg" type="AudioStream" id=25]
 [ext_resource path="res://sound/Mudchute_pig_2.ogg" type="AudioStream" id=26]
 [ext_resource path="res://sound/gun_shot.wav" type="AudioStream" id=27]
+[ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=28]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -75,8 +74,6 @@ environment = SubResource( 2 )
 [node name="HTerrain" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
 script = ExtResource( 1 )
-collision_enabled = true
-ambient_wind = 0.0
 lod_scale = 4.0
 map_scale = Vector3( 0.25, 1, 0.25 )
 _terrain_data = ExtResource( 3 )
@@ -97,11 +94,7 @@ ground/normal_roughness_3 = null
 
 [node name="Grass" type="Spatial" parent="HTerrain"]
 script = ExtResource( 4 )
-layer_index = 0
 texture = ExtResource( 8 )
-view_distance = 100.0
-custom_shader = null
-density = 4.0
 shader_params/u_globalmap_tint_bottom = 0.121
 shader_params/u_globalmap_tint_top = 0.263
 shader_params/u_bottom_ao = 0.0
@@ -110,9 +103,6 @@ shader_params/u_bottom_ao = 0.0
 script = ExtResource( 4 )
 layer_index = 1
 texture = ExtResource( 10 )
-view_distance = 100.0
-custom_shader = null
-density = 4.0
 shader_params/u_globalmap_tint_bottom = null
 shader_params/u_globalmap_tint_top = null
 shader_params/u_bottom_ao = null
@@ -121,9 +111,6 @@ shader_params/u_bottom_ao = null
 script = ExtResource( 4 )
 layer_index = 2
 texture = ExtResource( 11 )
-view_distance = 100.0
-custom_shader = null
-density = 4.0
 shader_params/u_globalmap_tint_bottom = null
 shader_params/u_globalmap_tint_top = null
 shader_params/u_bottom_ao = null
@@ -193,6 +180,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -261,55 +249,23 @@ stream = ExtResource( 25 )
 bus = "SFXPlayer"
 
 [node name="BGM" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 6 )
 volume_db = -10.0
 bus = "BGM"
 
 [node name="Animals" type="Spatial" parent="."]
 
-[node name="Villager" parent="Animals" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3678, 0.446679, -3.82733 )
-
-[node name="Villager2" parent="Animals" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352365, 0.446679, -3.46536 )
-
 [node name="Cow" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.952, 0.153235, -9.9445 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 
 [node name="Piglet" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 0.602338, 0.145164, -9.36789 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
 
 [node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17819, 0.153235, -11.1794 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 
 [node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310003, 0.153235, -11.513 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
-
-[node name="TigerPlant" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30323, 0.0512025, -4.11501 )
-
-[node name="Animals" type="Spatial" parent="."]
 
 [node name="Cow1" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300506, 0.385901, -9.69358 )
@@ -323,6 +279,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.861684, 0.711301, -11.5628 )
 [node name="Pig1" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 0.599424, 0, 0, 0, 0.599424, 0, 0, 0, 1, 0.861684, 0.581083, -10.8053 )
 SPRITE = ExtResource( 23 )
+
+[node name="Villager" parent="Animals" instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566549, -0.762986 )
+
+[node name="TigerPlant" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30323, 0.0512025, -4.11501 )
+
+[node name="Animals" type="Spatial" parent="."]
 
 [node name="GUIOverlay" type="Control" parent="."]
 margin_right = 640.0

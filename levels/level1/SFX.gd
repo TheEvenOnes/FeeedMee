@@ -14,8 +14,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_playerWalkingPlay(delta)
-	_eatCowPlay(delta)
+	_plantEatPlay(delta)
 	_rndFeed(delta)
+
+###############################################
+# Player SFX
 
 var _playerWalking:bool
 var _playerWalkingTime:float
@@ -37,24 +40,32 @@ func _playerWalkingPlay(delta):
 	if _playerWalkingTime > playerWalkFreq:
 		_playerWalkingTime = 0
 
-var _eatCow:bool
-var _eatCowTime:float
+###############################################
+# Plant SFX
 
-func eatCow():
+var _plantEat:bool
+var _plantEatTime:float
+
+func plantEat(what:int):
 	$DeadCow.stop()
+	$DeadPig.stop()
 	$Eating.stop()
-	_eatCow = true
-	_eatCowTime = 0
-	$DeadCow.play()
+	_plantEat = true
+	_plantEatTime = 0
+	match what:
+		0:
+			$DeadCow.play()
+		1:
+			$DeadPig.play()
 
-func _eatCowPlay(delta):
-	if !_eatCow:
+func _plantEatPlay(delta):
+	if !_plantEat:
 		return
-	if _eatCowTime > 0.5 && !$Eating.playing:
+	if _plantEatTime > 0.5 && !$Eating.playing:
 		$Eating.play()
-	if _eatCowTime > 0.6 && !$Eating.playing:
-		_eatCow = false
-	_eatCowTime+=delta
+	if _plantEatTime > 0.6 && !$Eating.playing:
+		_plantEat = false
+	_plantEatTime+=delta
 
 var _nextFeedSnd:float
 
@@ -70,3 +81,14 @@ func _rndFeed(delta):
 		$FeedMee.play()
 	else:
 		$ImHungry.play()
+
+###############################################
+# Enemy sounds
+
+func enemyGunShot():
+	$GunShot.play()
+
+func enemyGetOffMyLawn():
+	if !$GetOffMyLawn.playing:
+		return
+	$GetOffMyLawn.play()

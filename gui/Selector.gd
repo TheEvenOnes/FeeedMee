@@ -51,15 +51,21 @@ func _input(event: InputEvent) -> void:
 		# ourselves.
 		match target:
 			Item.START:
-				get_node("/root/Global").goto_scene("res://levels/level1/Level.tscn")
+				#get_node("/root/Global").goto_scene("res://levels/level1/Level.tscn")
+				get_node("/root/Global").goto_loading_scene("res://levels/level1/Level.tscn")
+				return
 			Item.OPTIONS:
 				# TODO: should this be instantiated only once and reused?
 				var inst := MENU_OPTIONS.instance()
 				inst.main_menu = get_node(".")
 				get_parent().add_child(inst)
 				get_parent().remove_child(get_node("."))
+				return
 			Item.EXIT:
 				get_tree().quit(0)
+
+func _exit_tree() -> void:
+	print('main menu selector: exiting tree')
 
 func _process(delta: float) -> void:
 	l = lerp(l, get_target().margin_left, 0.2)

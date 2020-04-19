@@ -73,6 +73,7 @@ export var collision_enabled := true setget set_collision_enabled
 export(float, 0.0, 1.0) var ambient_wind := 0.0 setget set_ambient_wind
 export(int, 2, 5) var lod_scale := 2.0 setget set_lod_scale, get_lod_scale
 
+# TODO Replace with `size` in world units?
 # Prefer using this instead of scaling the node's transform.
 # Spatial.scale isn't used because it's not suitable for terrains,
 # it would scale grass too and other environment objects.
@@ -89,6 +90,7 @@ var _data: HTerrainData = null
 
 var _mesher := Mesher.new()
 var _lodder := QuadTreeLod.new()
+var _viewer_pos := Vector3()
 
 # [lod][z][x] -> chunk
 # This container owns chunks
@@ -105,7 +107,6 @@ var _updated_chunks := 0
 var _logger = Logger.get_for(self)
 
 # Editor-only
-var _edit_manual_viewer_pos := Vector3()
 var _normals_baker = null
 
 
@@ -510,10 +511,10 @@ func set_data(new_data: HTerrainData):
 		_on_data_resolution_changed()
 
 	_material_params_need_update = true
-	
+
 	if has_method("update_configuration_warning"):
 		call("update_configuration_warning")
-	
+
 	_logger.debug("Set data done")
 
 
@@ -616,7 +617,7 @@ func set_shader_type(type: String):
 			_material.shader = load(CLASSIC4_SHADER_PATH) as Shader
 
 	_material_params_need_update = true
-	
+
 	if Engine.editor_hint:
 		property_list_changed_notify()
 
@@ -652,7 +653,7 @@ func set_custom_shader(shader: Shader):
 		_custom_shader.connect("changed", self, "_on_custom_shader_changed")
 		if _shader_type == SHADER_CUSTOM:
 			_material_params_need_update = true
-	
+
 	if Engine.editor_hint:
 		property_list_changed_notify()
 
@@ -776,19 +777,37 @@ const s_rdirs = [
 	[0, -1]
 ]
 
-func _process(delta: float):
-	# Get viewer pos
-	var viewer_pos = Vector3()
-	if Engine.editor_hint:
-		# In editor, we would need to use the editor's camera, 
-		# not the `current` one defined in the scene
-		viewer_pos = _edit_manual_viewer_pos
-	else:
-		var viewport = get_viewport()
+
+func _edit_update_viewer_position(camera: Camera):
+	_update_viewer_position(camera)
+
+
+func _update_viewer_position(camera: Camera):
+	if camera == null:
+		var viewport := get_viewport()
 		if viewport != null:
-			var camera = viewport.get_camera()
-			if camera != null:
-				viewer_pos = camera.get_global_transform().origin
+			camera = viewport.get_camera()
+	if camera == null:
+		return
+	if camera.projection == Camera.PROJECTION_ORTHOGONAL:
+		# In this mode, due to the fact Godot does not allow negative near plane,
+		# users have to pull the camera node very far away, but it confuses LOD
+		# into very low detail, while the seen area remains the same.
+		# So we need to base LOD on a different metric.
+		var hit := [0, 0, Vector3()]
+		var cam_pos := camera.global_transform.origin
+		var cam_dir := -camera.global_transform.basis.z
+		if cell_raycast(cam_pos, cam_dir, hit):
+			_viewer_pos = hit[2]
+	else:
+		_viewer_pos = camera.global_transform.origin
+
+
+func _process(delta: float):
+	if not Engine.is_editor_hint():
+		# In editor, the camera is only accessible from an editor plugin
+		_update_viewer_position(null)
+	var viewer_pos := _viewer_pos
 
 	if has_data():
 		if _data.is_locked():
@@ -960,7 +979,7 @@ func _cb_make_chunk(cpos_x: int, cpos_y: int, lod: int):
 
 	if chunk == null:
 		# This is the first time this chunk is required at this lod, generate it
-		
+
 		var lod_factor := _lodder.get_lod_size(lod)
 		var origin_in_cells_x := cpos_x * _chunk_size * lod_factor
 		var origin_in_cells_y := cpos_y * _chunk_size * lod_factor
@@ -997,7 +1016,7 @@ func _cb_get_vertical_bounds(cpos_x: int, cpos_y: int, lod: int):
 	# because the proper algorithm appears to be too slow for GDScript.
 	# It should be good enough for most common cases, unless you have super-sharp cliffs.
 	return _data.get_point_aabb(
-		origin_in_cells_x + chunk_size / 2, 
+		origin_in_cells_x + chunk_size / 2,
 		origin_in_cells_y + chunk_size / 2)
 #	var aabb = _data.get_region_aabb(
 #		origin_in_cells_x, origin_in_cells_y, chunk_size, chunk_size)
@@ -1013,16 +1032,16 @@ func _local_pos_to_cell(local_pos: Vector3) -> Array:
 
 static func _get_height_or_default(im: Image, pos_x: int, pos_y: int):
 	if pos_x < 0 or pos_y < 0 or pos_x >= im.get_width() or pos_y >= im.get_height():
-		return 0
+		return 0.0
 	return im.get_pixel(pos_x, pos_y).r
 
 
 # Performs a raycast to the terrain without using the collision engine.
-# This is mostly useful in the editor, where the collider isn't running.
+# This is mostly useful in the editor, where the collider can't be updated in realtime.
 # It may be slow on very large distance, but should be enough for editing purpose.
 # out_cell_pos is the returned hit position and must be specified as an array of 2 integers.
 # Returns false if there is no hit.
-func cell_raycast(origin_world: Vector3, dir_world: Vector3, out_cell_pos: Array):
+func cell_raycast(origin_world: Vector3, dir_world: Vector3, out_cell_pos: Array) -> bool:
 	assert(typeof(origin_world) == TYPE_VECTOR3)
 	assert(typeof(dir_world) == TYPE_VECTOR3)
 	assert(typeof(out_cell_pos) == TYPE_ARRAY)
@@ -1034,25 +1053,43 @@ func cell_raycast(origin_world: Vector3, dir_world: Vector3, out_cell_pos: Array
 	if heights == null:
 		return false
 
-	var to_local = get_internal_transform().affine_inverse()
+	# Transform to local (takes map scale into account)
+	var to_local := get_internal_transform().affine_inverse()
 	var origin = to_local.xform(origin_world)
 	var dir = to_local.basis.xform(dir_world)
+	var max_distance := 1000.0
+
+	# Raycast to the terrain's AABB first
+	var aabb := _data.get_aabb()
+	if aabb.has_no_area():
+		# Hack to force flat terrains to be detected
+		aabb = aabb.grow(0.1)
+	if not aabb.has_point(origin):
+		var destination = origin + dir * 10000.0
+		var hits := Util.get_aabb_intersection_with_segment(aabb, origin, destination)
+		if len(hits) == 0:
+			return false
+		# Bump origin to start at the hit point
+		origin = hits[0]
+		if len(hits) == 2:
+			var distance_through_aabb = hits[0].distance_to(hits[1])
+			if max_distance > distance_through_aabb:
+				max_distance = distance_through_aabb
 
 	heights.lock()
 
-	var cpos = _local_pos_to_cell(origin)
+	var cpos := _local_pos_to_cell(origin)
 	if origin.y < _get_height_or_default(heights, cpos[0], cpos[1]):
 		heights.unlock()
 		# Below
 		return false
 
-	var unit = 1.0
-	var d = 0.0
-	var max_distance = 800.0
+	var unit := 1.0
+	var d := 0.0
 	var pos = origin
 
 	# Slow, but enough for edition
-	# TODO Could be optimized with a form of binary search
+	# TODO Could be optimized using vertical bounds AABBs
 	while d < max_distance:
 		pos += dir * unit
 		cpos = _local_pos_to_cell(pos)
@@ -1060,6 +1097,8 @@ func cell_raycast(origin_world: Vector3, dir_world: Vector3, out_cell_pos: Array
 			cpos = _local_pos_to_cell(pos - dir * unit)
 			out_cell_pos[0] = cpos[0]
 			out_cell_pos[1] = cpos[1]
+			if len(out_cell_pos) == 3:
+				out_cell_pos[2] = pos
 			heights.unlock()
 			return true
 
@@ -1074,7 +1113,7 @@ func cell_raycast(origin_world: Vector3, dir_world: Vector3, out_cell_pos: Array
 static func get_ground_texture_shader_param(ground_texture_type: int, slot: int) -> String:
 	assert(typeof(slot) == TYPE_INT and slot >= 0)
 	_check_ground_texture_type(ground_texture_type)
-	return str(SHADER_PARAM_GROUND_PREFIX, 
+	return str(SHADER_PARAM_GROUND_PREFIX,
 		_ground_enum_to_name[ground_texture_type], "_", slot)
 
 
@@ -1152,10 +1191,6 @@ static func get_ground_texture_slot_count_for_shader(shader_type: String, logger
 
 func get_ground_texture_slot_count() -> int:
 	return get_ground_texture_slot_count_for_shader(_shader_type, _logger)
-
-
-func _edit_set_manual_viewer_pos(pos: Vector3):
-	_edit_manual_viewer_pos = pos
 
 
 func _edit_debug_draw(ci):

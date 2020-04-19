@@ -10,6 +10,7 @@ const PreviewGenerator = preload("./preview_generator.gd")
 const Brush = preload("../hterrain_brush.gd")
 const BrushDecal = preload("./brush/decal.gd")
 const Util = preload("../util/util.gd")
+const EditorUtil = preload("./util/editor_util.gd")
 const LoadTextureDialog = preload("./load_texture_dialog.gd")
 const GlobalMapBaker = preload("./globalmap_baker.gd")
 const ImageFileCache = preload("../util/image_file_cache.gd")
@@ -67,7 +68,7 @@ static func get_icon(name: String) -> Texture:
 func _enter_tree():
 	_logger.debug("HTerrain plugin Enter tree")
 	
-	var dpi_scale = Util.get_editor_dpi_scale(get_editor_interface().get_editor_settings())
+	var dpi_scale = EditorUtil.get_dpi_scale(get_editor_interface().get_editor_settings())
 	_logger.debug(str("DPI scale: ", dpi_scale))
 	
 	add_custom_type("HTerrain", "Spatial", HTerrain, get_icon("heightmap_node"))
@@ -354,11 +355,11 @@ func make_visible(visible):
 		edit(null)
 
 
-func forward_spatial_gui_input(p_camera, p_event):
+func forward_spatial_gui_input(p_camera: Camera, p_event: InputEvent) -> bool:
 	if _node == null || _node.get_data() == null:
 		return false
 	
-	_node._edit_set_manual_viewer_pos(p_camera.global_transform.origin)
+	_node._edit_update_viewer_position(p_camera)
 	
 	var captured_event = false
 	
@@ -391,11 +392,11 @@ func forward_spatial_gui_input(p_camera, p_event):
 		
 		var origin = p_camera.project_ray_origin(screen_pos)
 		var dir = p_camera.project_ray_normal(screen_pos)
-		
+
 		var hit_pos_in_cells = [0, 0]
 		if _node.cell_raycast(origin, dir, hit_pos_in_cells):
 			_brush_decal.set_position(Vector3(hit_pos_in_cells[0], 0, hit_pos_in_cells[1]))
-						
+			
 			if _mouse_pressed:
 				if Input.is_mouse_button_pressed(BUTTON_LEFT):
 					

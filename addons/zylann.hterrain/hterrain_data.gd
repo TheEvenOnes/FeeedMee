@@ -30,13 +30,19 @@ const _channel_formats = [
 	Image.FORMAT_RGB8, # normal
 	Image.FORMAT_RGBA8, # splat
 	Image.FORMAT_RGBA8, # color
+	# L8 is used instead of R8 because Godot can't save or load the latter to PNG
 	Image.FORMAT_L8, # detail
 	Image.FORMAT_RGB8 # global_albedo
 ]
 
-const MAX_RESOLUTION = 4096 + 1
-const MIN_RESOLUTION = 64 + 1 # must be higher than largest minimum chunk size
-const DEFAULT_RESOLUTION = 512
+# Resolution is a power of two + 1
+const MAX_RESOLUTION = 4097
+const MIN_RESOLUTION = 65 # must be higher than largest minimum chunk size
+const DEFAULT_RESOLUTION = 513
+const SUPPORTED_RESOLUTIONS = [
+	65, 129, 257, 513, 1025, 2049, 4097
+]
+
 const VERTICAL_BOUNDS_CHUNK_SIZE = 16
 # TODO Have vertical bounds chunk size to emphasise the fact it's independent
 # TODO Have undo chunk size to emphasise the fact it's independent
@@ -637,6 +643,7 @@ func get_texture(channel: int, index := 0) -> Texture:
 
 func get_aabb() -> AABB:
 	# TODO Why subtract 1? I forgot
+	# TODO Optimize for full region, this is actually quite costy
 	return get_region_aabb(0, 0, _resolution - 1, _resolution - 1)
 
 

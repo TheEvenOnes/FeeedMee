@@ -214,8 +214,9 @@ spot_angle_attenuation = 4.0
 [node name="SFX" type="Node" parent="."]
 script = ExtResource( 16 )
 
-[node name="WalStep" type="AudioStreamPlayer" parent="SFX"]
+[node name="WalkStep" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 17 )
+volume_db = -25.0
 bus = "SFX"
 
 [node name="DeadCow" type="AudioStreamPlayer" parent="SFX"]

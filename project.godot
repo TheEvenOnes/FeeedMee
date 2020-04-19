@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "HTerrainDataSaver",
 "language": "GDScript",
 "path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
+}, {
+"base": "Node",
+"class": "SoundFX",
+"language": "GDScript",
+"path": "res://levels/level1/SFX.gd"
 } ]
 _global_script_class_icons={
 "ActionChangerItem": "res://icon.png",
 "HTerrainDataLoader": "",
-"HTerrainDataSaver": ""
+"HTerrainDataSaver": "",
+"SoundFX": ""
 }
 
 [application]

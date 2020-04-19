@@ -12,6 +12,7 @@ var direction = Vector3()
 
 onready var ray_cast = $RayCast
 onready var sprite = $AnimatedSprite3D
+onready var sfx = get_node("../SFX")
 
 func _physics_process(delta: float) -> void:
 		process_input(delta)
@@ -70,7 +71,9 @@ func process_movement(delta):
 
 		if velocity.length_squared() > 0.1:
 			sprite.animation = 'walking'
+			sfx.playerWalking(true)
 		else:
 			sprite.animation = 'idle'
+			sfx.playerWalking(false)
 
 		sprite.flip_h = velocity.x < 0

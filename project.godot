@@ -48,6 +48,11 @@ _global_script_classes=[ {
 "class": "SoundFX",
 "language": "GDScript",
 "path": "res://levels/level1/SFX.gd"
+}, {
+"base": "KinematicBody",
+"class": "Villager",
+"language": "GDScript",
+"path": "res://levels/level1/Villager.gd"
 } ]
 _global_script_class_icons={
 "AchievementPanel": "",
@@ -57,7 +62,8 @@ _global_script_class_icons={
 "GenericItemRow": "res://icon.png",
 "HTerrainDataLoader": "",
 "HTerrainDataSaver": "",
-"SoundFX": ""
+"SoundFX": "",
+"Villager": ""
 }
 
 [application]

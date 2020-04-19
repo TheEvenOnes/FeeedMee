@@ -21,7 +21,7 @@ enum PlayerState {
 	Holding = 1,
 }
 
-var held_object: Animal = null
+var held_object = null # : Animal = null
 var hold_cooldown = 0.0
 var state = PlayerState.Idle
 
@@ -104,7 +104,8 @@ func process_held_object(delta) -> void:
 						holdable.push_back(body)
 					if len(holdable) > 0:
 						holdable.sort_custom(self, 'sorter')
-						var fst: Animal = holdable[0]
+						#var fst: Animal = holdable[0] # or villager... :)
+						var fst = holdable[0]
 						fst.start_held()
 						fst.get_parent().remove_child(fst)
 						hold_mount.add_child(fst)

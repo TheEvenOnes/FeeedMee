@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" type="Script" id=4]
 [ext_resource path="res://objects/BlockerProp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sound/game_music.ogg" type="AudioStream" id=6]
+[ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sprites/stones.png" type="Texture" id=7]
 [ext_resource path="res://sprites/grass_splat.png" type="Texture" id=8]
 [ext_resource path="res://sprites/grass.png" type="Texture" id=9]
@@ -261,6 +262,12 @@ volume_db = -10.0
 bus = "BGM"
 
 [node name="Animals" type="Spatial" parent="."]
+
+[node name="Villager" parent="Animals" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3678, 0.446679, -3.82733 )
+
+[node name="Villager2" parent="Animals" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352365, 0.446679, -3.46536 )
 
 [node name="Cow" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.952, 0.153235, -9.9445 )

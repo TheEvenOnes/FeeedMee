@@ -20,6 +20,8 @@
 [ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=18]
 [ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=19]
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=20]
+[ext_resource path="res://sound/imhungry.ogg" type="AudioStream" id=21]
+[ext_resource path="res://sound/FeedMeee.ogg" type="AudioStream" id=22]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -234,3 +236,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.99986, 0.153235, -11.3512 )
 
 [node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310003, 0.153235, -11.513 )
+
+[node name="FeedMee" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 22 )
+volume_db = -20.0
+bus = "SFXPlant"
+
+[node name="ImHungry" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 21 )
+volume_db = -20.0
+bus = "SFXPlant"

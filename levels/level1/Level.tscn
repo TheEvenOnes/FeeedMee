@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=20]
 [ext_resource path="res://sound/imhungry.ogg" type="AudioStream" id=21]
 [ext_resource path="res://sound/FeedMeee.ogg" type="AudioStream" id=22]
+[ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=23]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -84,6 +85,8 @@ environment = SubResource( 2 )
 [node name="HTerrain" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
 script = ExtResource( 1 )
+collision_enabled = true
+ambient_wind = 0.0
 lod_scale = 3.0
 map_scale = Vector3( 0.25, 0.25, 0.25 )
 _terrain_data = ExtResource( 3 )
@@ -199,6 +202,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -242,6 +246,10 @@ bus = "SFXPlant"
 
 [node name="Cow" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.952, 0.153235, -9.9445 )
+
+[node name="Piglet" parent="Animals" instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.574678, 0.153235, -9.36789 )
+SPRITE = ExtResource( 23 )
 
 [node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17819, 0.153235, -11.1794 )

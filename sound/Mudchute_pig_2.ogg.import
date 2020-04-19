@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Mudchute_pig_2.ogg-4b3842141005a40593f03ceeaf6c1efe.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -50,6 +50,8 @@ var _plantEatTime:float
 func plantEat(what:int):
 	$DeadCow.stop()
 	$DeadPig.stop()
+	$DeadCow.bus = "SFXPlant"
+	$DeadPig.bus = "SFXPlant"
 	$Eating.stop()
 	_plantEat = true
 	_plantEatTime = 0
@@ -93,3 +95,16 @@ func enemyGetOffMyLawn():
 	if !$GetOffMyLawn.playing:
 		return
 	$GetOffMyLawn.play()
+
+###############################################
+# Animal SFX
+
+func animalGetRelease(what:String):
+	var snd = null
+	if what.find("Cow") >= 0:
+		snd = $DeadCow
+	if what.find("Pig") >= 0:
+		snd = $DeadPig
+	if null != snd:	
+		snd.bus = "SFXPlayer"
+		snd.play()

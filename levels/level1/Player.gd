@@ -112,6 +112,7 @@ func process_held_object(delta) -> void:
 						fst.transform.origin = Vector3.ZERO
 						state = PlayerState.Holding
 						held_object = fst
+						sfx.animalGetRelease(fst.name)
 						break
 	elif state == PlayerState.Holding:
 		if Input.is_action_just_pressed('player_action'):
@@ -126,6 +127,7 @@ func process_held_object(delta) -> void:
 				throw_velocity = Vector3(velocity.x, 3.0, velocity.z).normalized() * 6.0
 			held_object.stop_held(throw_velocity)
 			held_object.global_transform.origin = hold_mount.global_transform.origin
+			sfx.animalGetRelease(held_object.name)
 			held_object = null
 			state = PlayerState.Idle
 

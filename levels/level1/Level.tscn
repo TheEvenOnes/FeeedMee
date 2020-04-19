@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -23,6 +23,10 @@
 [ext_resource path="res://sound/imhungry.ogg" type="AudioStream" id=21]
 [ext_resource path="res://sound/FeedMeee.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=23]
+[ext_resource path="res://sound/get_off_my_lawn.ogg" type="AudioStream" id=24]
+[ext_resource path="res://sound/die.ogg" type="AudioStream" id=25]
+[ext_resource path="res://sound/Mudchute_pig_2.ogg" type="AudioStream" id=26]
+[ext_resource path="res://sound/gun_shot.wav" type="AudioStream" id=27]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -202,6 +206,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -221,10 +226,14 @@ script = ExtResource( 16 )
 [node name="WalkStep" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 17 )
 volume_db = -25.0
-bus = "SFXPlaye"
+bus = "SFXPlayer"
 
 [node name="DeadCow" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 18 )
+bus = "SFXPlant"
+
+[node name="DeadPig" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 26 )
 bus = "SFXPlant"
 
 [node name="Eating" type="AudioStreamPlayer" parent="SFX"]
@@ -241,17 +250,49 @@ stream = ExtResource( 21 )
 volume_db = -20.0
 bus = "SFXPlant"
 
+[node name="GunShot" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 27 )
+bus = "SFXEnemy"
+
+[node name="GetOffMyLawn" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 24 )
+bus = "SFXEnemy"
+
+[node name="PlayerDie" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 25 )
+bus = "SFXPlayer"
+
 [node name="Animals" type="Spatial" parent="."]
 
 [node name="Cow" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.952, 0.153235, -9.9445 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 
 [node name="Piglet" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.574678, 0.153235, -9.36789 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
 
 [node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17819, 0.153235, -11.1794 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 
 [node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310003, 0.153235, -11.513 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0

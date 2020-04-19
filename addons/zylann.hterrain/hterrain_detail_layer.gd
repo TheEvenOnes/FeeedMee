@@ -368,10 +368,10 @@ func _get_chunk_aabb(terrain, lpos: Vector3):
 	var origin_cells_z := int(lpos.z / terrain_scale.z)
 	var size_cells_x := int(CHUNK_SIZE / terrain_scale.x)
 	var size_cells_z := int(CHUNK_SIZE / terrain_scale.z)
-	
+
 	var aabb = terrain_data.get_region_aabb(
 		origin_cells_x, origin_cells_z, size_cells_x, size_cells_z)
-		
+
 	aabb.position = Vector3(lpos.x, lpos.y + aabb.position.y * terrain_scale.y, lpos.z)
 	aabb.size = Vector3(CHUNK_SIZE, aabb.size.y * terrain_scale.y, CHUNK_SIZE)
 	return aabb
@@ -545,9 +545,9 @@ static func _create_quad() -> Mesh:
 	return mesh
 
 
-static func _generate_multimesh(resolution: int, density: float, 
+static func _generate_multimesh(resolution: int, density: float,
 	existing_multimesh: MultiMesh) -> MultiMesh:
-		
+
 	var mesh = _create_quad()
 
 	var position_randomness = 0.5
@@ -558,7 +558,7 @@ static func _generate_multimesh(resolution: int, density: float,
 	var idensity = int(density)
 	var random_instance_count = int(cell_count * (density - floor(density)))
 	var total_instance_count = cell_count * idensity + random_instance_count
-	
+
 	var mm
 	if existing_multimesh != null:
 		mm = existing_multimesh
@@ -575,7 +575,7 @@ static func _generate_multimesh(resolution: int, density: float,
 	for z in resolution:
 		for x in resolution:
 			for j in idensity:
-				
+
 				var pos = Vector3(x, 0, z)
 				pos.x += rand_range(-position_randomness, position_randomness)
 				pos.z += rand_range(-position_randomness, position_randomness)
@@ -584,7 +584,7 @@ static func _generate_multimesh(resolution: int, density: float,
 				mm.set_instance_transform(i, \
 					Transform(_get_random_instance_basis(scale_randomness), pos))
 				i += 1
-	
+
 	# Second pass adds the rest
 	for j in random_instance_count:
 		var pos = Vector3(rand_range(0, resolution), 0, rand_range(0, resolution))
@@ -604,5 +604,5 @@ static func _get_random_instance_basis(scale_randomness: float) -> Basis:
 	var basis = Basis()
 	basis = basis.scaled(Vector3(1, s, 1))
 	basis = basis.rotated(Vector3(0, 1, 0), rand_range(0, PI))
-	
+
 	return basis

@@ -1,5 +1,6 @@
 tool
 extends KinematicBody
+class_name Animal
 
 export (float) var HEALTH = 10.0
 export (float) var MAX_HUNGER = 3.0
@@ -19,6 +20,7 @@ var velocity = Vector3()
 var direction = Vector3()
 
 onready var ray_cast = $RayCast
+onready var collider = $CollisionShape
 onready var sfx = $Walking
 
 var rng = RandomNumberGenerator.new()
@@ -26,7 +28,9 @@ var rng = RandomNumberGenerator.new()
 enum AnimalState {
 	Idle = 0,
 	Munching = 1,
-	Moving = 2
+	Moving = 2,
+	Held = 3,
+	Thrown = 4
 }
 
 var state = AnimalState.Idle
@@ -34,6 +38,7 @@ var next_decision_in = AI_DECISION_SPEED
 var hunger = 0.0
 var tired = 0.0
 var animal_direction = Vector3.ZERO
+var throw_velocity = Vector3.ZERO
 
 func _ready() -> void:
 	rng.randomize()
@@ -135,13 +140,32 @@ func process_ai(delta: float) -> void:
 					stop_moving()
 					state = AnimalState.Idle
 
-		movement_vector = animal_direction
+			AnimalState.Held:
+				play('walking')
+				hunger = 0.0
+				tired = 0.0
 
+		movement_vector = animal_direction
 		velocity += movement_vector
+
+		if state == AnimalState.Held:
+			velocity = Vector3.ZERO
 
 func process_movement(delta):
 	if not Engine.is_editor_hint():
 		direction.y = 0
+
+		if state == AnimalState.Held:
+			return
+
+		if state == AnimalState.Thrown:
+			throw_velocity.y += delta * GRAVITY
+			throw_velocity = move_and_slide(throw_velocity, Vector3(0, 1, 0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
+			if is_on_floor():
+				throw_velocity = Vector3.ZERO
+				state = AnimalState.Idle
+				velocity = Vector3.ZERO
+			return
 
 		if not is_on_floor():
 			velocity.y += delta * GRAVITY
@@ -165,3 +189,14 @@ func process_movement(delta):
 
 	if has_node('AnimatedSprite3D'):
 		$AnimatedSprite3D.flip_h = velocity.x < 0
+
+func start_held() -> void:
+	collider.disabled = true
+	ray_cast.enabled = false
+	state = AnimalState.Held
+
+func stop_held(velocity: Vector3) -> void:
+	throw_velocity = velocity
+	ray_cast.enabled = true
+	collider.disabled = false
+	state = AnimalState.Thrown

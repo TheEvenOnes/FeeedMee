@@ -12,11 +12,23 @@ var direction = Vector3()
 
 onready var ray_cast = $RayCast
 onready var sprite = $AnimatedSprite3D
+onready var holdable_scanner = $Area
+onready var hold_mount = $HoldMount
 onready var sfx = get_node("../SFX")
+
+enum PlayerState {
+	Idle = 0,
+	Holding = 1,
+}
+
+var held_object: Animal = null
+var hold_cooldown = 0.0
+var state = PlayerState.Idle
 
 func _physics_process(delta: float) -> void:
 		process_input(delta)
 		process_movement(delta)
+		process_held_object(delta)
 
 func get_distance_to_bottom() -> float:
 	if ray_cast != null:
@@ -77,3 +89,47 @@ func process_movement(delta):
 			sfx.playerWalking(false)
 
 		sprite.flip_h = velocity.x < 0
+
+func process_held_object(delta) -> void:
+	hold_cooldown = max(hold_cooldown - delta, 0.0)
+	if state == PlayerState.Idle:
+		if hold_cooldown > 0.0:
+			return
+		var bodies = holdable_scanner.get_overlapping_bodies()
+		if len(bodies) > 0:
+			if Input.is_action_just_pressed('player_action'):
+				var holdable = []
+				for body in bodies:
+					if body.is_in_group('holdable'):
+						holdable.push_back(body)
+					if len(holdable) > 0:
+						holdable.sort_custom(self, 'sorter')
+						var fst: Animal = holdable[0]
+						fst.start_held()
+						fst.get_parent().remove_child(fst)
+						hold_mount.add_child(fst)
+						fst.transform.origin = Vector3.ZERO
+						state = PlayerState.Holding
+						held_object = fst
+						break
+	elif state == PlayerState.Holding:
+		if Input.is_action_just_pressed('player_action'):
+			hold_cooldown = 0.2
+			hold_mount.remove_child(held_object)
+			var animals = get_node('../Animals')
+			animals.add_child(held_object)
+			var throw_velocity
+			if velocity.length_squared() < 0.1:
+				throw_velocity = Vector3(0.0, 3.0, -1.0).normalized() * 6.0
+			else:
+				throw_velocity = Vector3(velocity.x, 3.0, velocity.z).normalized() * 6.0
+			held_object.stop_held(throw_velocity)
+			held_object.global_transform.origin = hold_mount.global_transform.origin
+			held_object = null
+			state = PlayerState.Idle
+
+func sorter(a: Spatial, b: Spatial) -> bool:
+	var la = global_transform.origin.distance_to(a.global_transform.origin)
+	var lb = global_transform.origin.distance_to(b.global_transform.origin)
+	return la > lb
+

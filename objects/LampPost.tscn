@@ -50,13 +50,9 @@ size = Vector2( 0.1, 0.1 )
 script = ExtResource( 1 )
 PROP_TEXTURE = ExtResource( 2 )
 
-[node name="OmniLight" type="SpotLight" parent="."]
+[node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 2.98023e-08, 1, 0, -1, 2.98023e-08, 0, 2.2295, 0.10641 )
 light_color = Color( 1, 0.788235, 0.423529, 1 )
-spot_range = 10.0
-spot_attenuation = 0.0412347
-spot_angle = 50.0
-spot_angle_attenuation = 2.46229
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05267, 0 )

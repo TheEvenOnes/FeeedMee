@@ -3,6 +3,7 @@ extends KinematicBody
 
 export (float) var AI_DECISION_SPEED = 2.0
 
+export (bool) var SKIP_HUNGER = false
 export (bool) var FLIP_SPRITE setget set_flip, get_flip
 var _flip = false
 
@@ -27,8 +28,7 @@ var feeding_on = null
 
 func _ready() -> void:
 	rng.randomize()
-	if has_node('AnimatedSprite3D'):
-		$AnimatedSprite3D.flip_h = _flip
+	set_flip(_flip)
 
 func set_flip(flip: bool) -> void:
 	_flip = flip

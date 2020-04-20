@@ -11,19 +11,16 @@
 [ext_resource path="res://sprites/stones.png" type="Texture" id=9]
 [ext_resource path="res://sprites/grass_splat.png" type="Texture" id=10]
 [ext_resource path="res://sprites/grass.png" type="Texture" id=11]
+[ext_resource path="res://sky/sky.tres" type="ProceduralSky" id=12]
 [ext_resource path="res://sprites/bush.png" type="Texture" id=13]
 [ext_resource path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" type="Texture" id=14]
 [ext_resource path="res://sprites/tree.png" type="Texture" id=15]
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=16]
 [ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=17]
 
-[sub_resource type="ProceduralSky" id=1]
-ground_bottom_color = Color( 0.839216, 0.917647, 0.980392, 1 )
-ground_horizon_color = Color( 0.839216, 0.917647, 0.980392, 1 )
-
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id=1]
 background_mode = 2
-background_sky = SubResource( 1 )
+background_sky = ExtResource( 12 )
 background_color = Color( 0.572549, 0.956863, 0.984314, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 fog_color = Color( 1, 1, 1, 1 )
@@ -46,7 +43,7 @@ adjustment_brightness = 0.82
 adjustment_contrast = 1.18
 adjustment_saturation = 1.26
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "CameraMove"
 length = 8.0
 loop = true
@@ -59,10 +56,10 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = PoolRealArray( 0, 1, 0, 9.36536, 0, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 2, 1, -1.57979, 9.36536, -0.20096, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 4, 1, -2.4542, 8.8335, -0.468959, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 6, 1, -1.03466, 9.36536, 1.42446, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 8, 1, 0, 9.36536, 0, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1 )
 
-[node name="Spatial" type="Spatial"]
+[node name="MainMenu" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource( 1 )
 
 [node name="HTerrain" type="Spatial" parent="." groups=[
 "terrain",
@@ -138,7 +135,7 @@ fov = 57.1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Position3D/Camera"]
 autoplay = "CameraMove"
 playback_speed = 0.1
-anims/CameraMove = SubResource( 3 )
+anims/CameraMove = SubResource( 2 )
 
 [node name="GUI" parent="." instance=ExtResource( 1 )]
 
@@ -168,6 +165,7 @@ SPRITE = ExtResource( 17 )
 
 [node name="TigerPlant" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1.40124, 0, -1.2716, 0, 1.8922, 0, 1.2716, 0, 1.40124, 4.40116, 4.67128, -4.18042 )
+SKIP_HUNGER = true
 FLIP_SPRITE = true
 
 [node name="SpotLight" type="SpotLight" parent="."]

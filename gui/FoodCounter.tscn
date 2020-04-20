@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://levels/level1/Counters.gd" type="Script" id=1]
+
+[node name="Counter" type="Control"]
+margin_left = 0.128517
+margin_right = 40.1285
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+NOMS_LEFT = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 5.269
+margin_top = 2.44173
+margin_right = 37.269
+margin_bottom = 34.4417
+
+[node name="Label" type="Label" parent="."]
+margin_left = 22.1087
+margin_top = 27.2648
+margin_right = 46.1087
+margin_bottom = 41.2648
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "x2"
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -31,6 +31,9 @@
 [ext_resource path="res://sky/sky.tres" type="ProceduralSky" id=30]
 [ext_resource path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" type="Texture" id=31]
 [ext_resource path="res://sprites/tree.png" type="Texture" id=32]
+[ext_resource path="res://sprites/cow.png" type="Texture" id=33]
+[ext_resource path="res://sprites/joe.png" type="Texture" id=36]
+[ext_resource path="res://gui/FoodCounter.tscn" type="PackedScene" id=37]
 
 [sub_resource type="Environment" id=1]
 background_mode = 2
@@ -273,7 +276,6 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -394,11 +396,22 @@ transform = Transform( 1.32205, 0, -0.470918, 0, 1.40342, 0, 0.470918, 0, 1.3220
 FLIP_SPRITE = true
 
 [node name="GUIOverlay" type="Control" parent="."]
-margin_right = 640.0
+margin_left = -0.128517
+margin_right = 639.871
 margin_bottom = 360.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CowCounter" parent="GUIOverlay" instance=ExtResource( 37 )]
+IMAGE = ExtResource( 33 )
+NOMS_LEFT = 4
+
+[node name="JoeCounter" parent="GUIOverlay" instance=ExtResource( 37 )]
+margin_left = 40.1285
+margin_right = 80.1285
+IMAGE = ExtResource( 36 )
+NOMS_LEFT = 1
 
 [node name="LevelBounds" type="Spatial" parent="."]
 

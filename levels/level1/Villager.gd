@@ -13,6 +13,10 @@ export (float) var ACCEL = 1
 export (float) var DEACCEL = 16
 export (float) var MAX_SLOPE_ANGLE = 30
 
+# Define radii for the nudge-back shell.
+export (float) var NUDGE_BACK_INNER = 1.5
+export (float) var NUDGE_BACK_OUTER = 7
+
 export (SpriteFrames) var SPRITE setget set_sprite, get_sprite
 
 var _sprite = null
@@ -40,10 +44,14 @@ var tired = 0.0
 var villager_direction = Vector3.ZERO
 var throw_velocity = Vector3.ZERO
 
+# Villager stays around the spawn location.
+var spawn_location: Vector3 = Vector3.ZERO
+
 func _ready() -> void:
 	rng.randomize()
 	if has_node('AnimatedSprite3D'):
 		$AnimatedSprite3D.frames = _sprite
+	spawn_location = global_transform.origin
 
 func set_sprite(frames: SpriteFrames) -> void:
 	_sprite = frames
@@ -116,6 +124,23 @@ func process_ai(delta: float) -> void:
 						y *= 2.0
 						y = y if abs(y) > 0.1 else 0.1
 						villager_direction = Vector3(x, 0.0, y).normalized() * MAX_SPEED
+
+						# There is a certain "nudge back" shell around the
+						# spawn location of the villager.
+						# Is the villager inside this  "nudge back" shell, or
+						# even beyond it?
+						var current_location: Vector3 = global_transform.origin
+						print('dist to spawn: ', current_location.distance_to(spawn_location))
+						if current_location.distance_to(spawn_location) > NUDGE_BACK_INNER:
+							var nudge_strength = (current_location.distance_to(spawn_location) - NUDGE_BACK_INNER) / (NUDGE_BACK_OUTER - NUDGE_BACK_INNER)
+							print('nudging back with strength ', nudge_strength)
+							nudge_strength = clamp(nudge_strength, 0.0, 1.0)
+							print('clamped to ', nudge_strength)
+							print(' (going from chosen direction ', villager_direction.normalized(), ' to ', current_location.direction_to(spawn_location), '...')
+							villager_direction = villager_direction.normalized().slerp(current_location.direction_to(spawn_location), nudge_strength)
+							print('   choosing ', villager_direction, ')')
+							villager_direction = villager_direction.normalized() * MAX_SPEED
+
 						state = VillagerState.Moving
 
 			VillagerState.Firing:

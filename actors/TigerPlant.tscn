@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://levels/level1/TigerPlant.gd" type="Script" id=1]
 [ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=2]
 [ext_resource path="res://sprites/tiger-plant.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://actors/SoundPlayer.gd" type="Script" id=4]
+[ext_resource path="res://sound/FeedMeee.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/imhungry.ogg" type="AudioStream" id=6]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.0808372
@@ -53,3 +55,11 @@ FREQUENCY = 2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="FoodScanner"]
 shape = SubResource( 3 )
+
+[node name="FeedMee" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+bus = "SFXPlant"
+
+[node name="ImHungry" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+bus = "SFXPlant"

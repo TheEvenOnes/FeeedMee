@@ -21,7 +21,7 @@
 [ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=19]
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=20]
 [ext_resource path="res://sprites/dirt.png" type="Texture" id=21]
-[ext_resource path="res://sound/FeedMeee.ogg" type="AudioStream" id=22]
+[ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=23]
 [ext_resource path="res://sound/die.ogg" type="AudioStream" id=25]
 [ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=28]
@@ -445,13 +445,6 @@ NUDGE_BACK_OUTER = 7.0
 [node name="TigerPlant" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1.32205, 0, -0.470918, 0, 1.40342, 0, 0.470918, 0, 1.32205, 13.3885, 1.09797, 9.78304 )
 FLIP_SPRITE = true
-
-[node name="FeedMee" type="AudioStreamPlayer3D" parent="TigerPlant"]
-stream = ExtResource( 22 )
-bus = "SFXPlant"
-
-[node name="ImHungry" type="AudioStreamPlayer3D" parent="TigerPlant"]
-bus = "SFXPlant"
 
 [node name="LevelBounds" type="Spatial" parent="."]
 

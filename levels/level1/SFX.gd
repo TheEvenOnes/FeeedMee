@@ -74,5 +74,4 @@ func _rndFeed(delta):
 	if int(_nextFeedSnd) % 2 == 1:
 		get_node('../TigerPlant/FeedMee').play()
 	else:
-		pass
-		# get_node('../TigerPlant/ImHungry').play()
+		get_node('../TigerPlant/ImHungry').play()

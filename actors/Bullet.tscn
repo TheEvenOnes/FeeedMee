@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprites/bullet.tres" type="SpriteFrames" id=1]
+
+[node name="Bullet" type="Spatial"]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+frames = ExtResource( 1 )
+animation = "flying"

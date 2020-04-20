@@ -198,8 +198,8 @@ func start_held() -> void:
 	ray_cast.enabled = false
 	state = AnimalState.Held
 
-func stop_held(velocity: Vector3) -> void:
-	throw_velocity = velocity
+func stop_held(new_throw_velocity: Vector3) -> void:
+	throw_velocity = new_throw_velocity
 	ray_cast.enabled = true
 	collider.disabled = false
 	state = AnimalState.Thrown

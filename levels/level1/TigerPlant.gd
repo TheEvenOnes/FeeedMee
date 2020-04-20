@@ -17,11 +17,11 @@ onready var food_scanner = $FoodScanner
 var rng = RandomNumberGenerator.new()
 
 enum TigerPlantState {
-	Idle = 0,
-	Devouring = 1,
+	IDLE = 0,
+	DEVOURING = 1,
 }
 
-var state = TigerPlantState.Idle
+var state = TigerPlantState.IDLE
 var next_decision_in = AI_DECISION_SPEED
 var feeding_on = null
 
@@ -58,7 +58,7 @@ func process_ai(delta: float) -> void:
 		if next_decision_in <= 0.0:
 			next_decision_in = 1.0
 			match state:
-				TigerPlantState.Idle:
+				TigerPlantState.IDLE:
 					var bodies = food_scanner.get_overlapping_bodies()
 					if len(bodies) > 0:
 						var food = []
@@ -68,17 +68,17 @@ func process_ai(delta: float) -> void:
 							if len(food) > 0:
 								food.sort_custom(self, 'sorter')
 								feeding_on = food[0]
-								state = TigerPlantState.Devouring
+								state = TigerPlantState.DEVOURING
 								break
 					play('idle')
 
-				TigerPlantState.Devouring:
+				TigerPlantState.DEVOURING:
 					play('munching')
 					if has_node('AnimatedSprite3D'):
 						print($AnimatedSprite3D.animation)
-						var anim_frames = $AnimatedSprite3D.frames.get_frame_count('munching')
+						# var anim_frames = $AnimatedSprite3D.frames.get_frame_count('munching')
 						var curr_frame = $AnimatedSprite3D.frame
-						if $AnimatedSprite3D.animation == 'munching' and curr_frame > anim_frames - 4:
+						if $AnimatedSprite3D.animation == 'munching' and curr_frame >= 3:
 							if feeding_on != null:
 								print(feeding_on.global_transform.origin.distance_to(global_transform.origin))
 								if feeding_on.global_transform.origin.distance_to(global_transform.origin) < 1.5:
@@ -87,8 +87,7 @@ func process_ai(delta: float) -> void:
 								feeding_on = null
 								# TODO: put gibbs here
 								# TODO: handle player specially
-							state = TigerPlantState.Idle
-
+							state = TigerPlantState.IDLE
 
 func sorter(a: Spatial, b: Spatial) -> bool:
 	var la = global_transform.origin.distance_to(a.global_transform.origin)

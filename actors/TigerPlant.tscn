@@ -42,12 +42,12 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 3 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Devouring" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -50.0
+volume_db = -25.0
+pitch_scale = 1.2
 script = ExtResource( 4 )
 FREQUENCY = 2.0
 

@@ -37,7 +37,7 @@ func get_distance_to_bottom() -> float:
 			return (global_transform.origin - ray_cast.get_collision_point()).length_squared()
 	return 100.0
 
-func process_input(delta: float) -> void:
+func process_input(_delta: float) -> void:
 		direction = Vector3()
 
 		var input_movement_vector = Vector3()
@@ -122,7 +122,7 @@ func process_held_object(delta) -> void:
 			animals.add_child(held_object)
 			var throw_velocity
 			if velocity.length_squared() < 0.1:
-				throw_velocity = Vector3(0.0, 3.0, -1.0).normalized() * 6.0
+				throw_velocity = Vector3(0.0, 3.0, -1.0).normalized() * 3.0
 			else:
 				throw_velocity = Vector3(velocity.x, 3.0, velocity.z).normalized() * 6.0
 			held_object.stop_held(throw_velocity)

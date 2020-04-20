@@ -65,11 +65,11 @@ func process_ai(delta: float) -> void:
 						for body in bodies:
 							if body.is_in_group('food'):
 								food.push_back(body)
-							if len(food) > 0:
-								food.sort_custom(self, 'sorter')
-								feeding_on = food[0]
-								state = TigerPlantState.DEVOURING
-								break
+						if len(food) > 0:
+							food.sort_custom(self, 'sorter')
+							feeding_on = food[0]
+							state = TigerPlantState.DEVOURING
+							break
 					play('idle')
 
 				TigerPlantState.DEVOURING:

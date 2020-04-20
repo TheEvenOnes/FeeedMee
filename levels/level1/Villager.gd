@@ -8,8 +8,8 @@ export (float) var MAX_TIRED = 3.0
 export (float) var AI_DECISION_SPEED = 2.0
 
 export (float) var GRAVITY = -24.8
-export (float) var MAX_SPEED = 9
-export (float) var ACCEL = 4.5
+export (float) var MAX_SPEED = 0.5
+export (float) var ACCEL = 1
 export (float) var DEACCEL = 16
 export (float) var MAX_SLOPE_ANGLE = 30
 

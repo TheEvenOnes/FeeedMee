@@ -296,13 +296,6 @@ SPRITE = ExtResource( 23 )
 
 [node name="Villager" parent="Animals" instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566549, -0.762986 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-MAX_TIRED = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
-MAX_SLOPE_ANGLE = 30.0
 
 [node name="TigerPlant" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30323, 0.0512025, -4.11501 )

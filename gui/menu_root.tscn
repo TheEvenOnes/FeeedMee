@@ -155,39 +155,26 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.36732, 0 )
 
 [node name="Cow1" parent="Animals" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445483, 8.95289, -6.6666 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 
 [node name="Cow2" parent="Animals" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, -1.50996e-07, 0, 1.50996e-07, 1, 1.8162, 9.56989, -5.46722 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 
 [node name="Cow3" parent="Animals" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96304, 10.0928, -6.6666 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 
 [node name="Piggy" parent="Animals" instance=ExtResource( 16 )]
 transform = Transform( 0.771503, 0, 0, 0, 0.771503, 0, 0, 0, 0.771503, 1.66317, 8.9735, -5.13857 )
-HEALTH = 10.0
-MAX_HUNGER = 3.0
-AI_DECISION_SPEED = 2.0
-GRAVITY = -24.8
-DEACCEL = 16.0
 SPRITE = ExtResource( 17 )
 
 [node name="TigerPlant" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.40116, 5.24896, -4.18042 )
+transform = Transform( 1.40124, 0, -1.2716, 0, 1.8922, 0, 1.2716, 0, 1.40124, 4.40116, 4.67128, -4.18042 )
 FLIP_SPRITE = true
 
 [node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( -0.975797, -0.0918016, -0.198474, -0.19289, 0.78892, 0.583437, 0.10302, 0.6076, -0.787533, 2.0726, 12.4208, -14.0964 )
+light_energy = 0.84
+light_indirect_energy = 1.97
+shadow_enabled = true
+spot_range = 242.0
+spot_angle = 44.1029
+spot_angle_attenuation = 0.594604

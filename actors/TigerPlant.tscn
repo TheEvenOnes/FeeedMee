@@ -14,14 +14,12 @@ flags_transparent = true
 flags_albedo_tex_force_srgb = true
 params_cull_mode = 2
 params_depth_draw_mode = 3
-params_billboard_mode = 2
 
 [sub_resource type="SphereShape" id=3]
 radius = 0.927531
 
 [node name="TigerPlant" type="KinematicBody"]
 script = ExtResource( 1 )
-SPRITE = ExtResource( 3 )
 
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.193668, 0 )
@@ -32,7 +30,7 @@ transform = Transform( -1, 2.98023e-08, -1.17225e-07, -1.61928e-07, 7.35137e-08,
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0519981, 0.719466, 0 )
+transform = Transform( 0.761824, 0, 0, 0, 0.761824, 0, 0, 0, 0.761824, 0.0519981, 0.719466, 0 )
 material_override = SubResource( 2 )
 cast_shadow = 2
 pixel_size = 0.025

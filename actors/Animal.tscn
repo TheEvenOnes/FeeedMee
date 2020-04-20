@@ -38,7 +38,7 @@ transform = Transform( -1.18217e-07, 7.35137e-08, 1, 1, -2.98023e-08, 7.35137e-0
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36926, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334627, 0 )
 material_override = SubResource( 2 )
 cast_shadow = 2
 pixel_size = 0.025
@@ -48,6 +48,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Walking" type="AudioStreamPlayer" parent="."]

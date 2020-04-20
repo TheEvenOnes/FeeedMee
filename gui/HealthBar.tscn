@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="HealthBar" type="ProgressBar"]
+margin_left = 568.129
+margin_top = 336.0
+margin_right = 632.129
+margin_bottom = 350.0

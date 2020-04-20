@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://gui/FoodCounter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/cow.png" type="Texture" id=2]
+[ext_resource path="res://sprites/joe.png" type="Texture" id=3]
+[ext_resource path="res://sprites/piglet.png" type="Texture" id=4]
+[ext_resource path="res://levels/level1/Counters.gd" type="Script" id=5]
+[ext_resource path="res://sprites/villager1.png" type="Texture" id=6]
+
+[node name="Scores" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CowCounter" type="Control" parent="." instance=ExtResource( 1 )]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 0 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+IMAGE = ExtResource( 2 )
+NOMS_LEFT = -1
+KEY = "cow"
+
+[node name="PigCounter" type="Control" parent="." instance=ExtResource( 1 )]
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 0 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+IMAGE = ExtResource( 4 )
+NOMS_LEFT = -1
+KEY = "pig"
+
+[node name="RedneckCounter" type="Control" parent="." instance=ExtResource( 1 )]
+margin_left = 88.0
+margin_right = 128.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 0 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+IMAGE = ExtResource( 6 )
+NOMS_LEFT = -1
+KEY = "redneck"
+
+[node name="JoeCounter" type="Control" parent="." instance=ExtResource( 1 )]
+margin_left = 132.0
+margin_right = 172.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 0 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+IMAGE = ExtResource( 3 )
+NOMS_LEFT = 1
+KEY = "joe"

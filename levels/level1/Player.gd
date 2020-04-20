@@ -18,7 +18,7 @@ onready var sprite = $AnimatedSprite3D
 onready var holdable_scanner = $Area
 onready var hold_mount = $HoldMount
 onready var sfx = get_node("../SFX")
-onready var health_bar = get_node("../GUIOverlay_Health/HealthBar")
+onready var health_bar = get_node("../GUIOverlay/HealthBar")
 
 enum PlayerState {
 	Idle = 0,
@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 		process_input(delta)
 		process_movement(delta)
 		process_held_object(delta)
-		
+
 		health_bar.max_value = health_max
 		health_bar.value = health_now
 
@@ -42,7 +42,7 @@ func hurt(amount: float) -> void:
 	$PlayerHurt.play()
 	if health_now < 0:
 		die()
-	
+
 func die() -> void:
 	pass
 

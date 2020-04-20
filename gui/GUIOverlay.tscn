@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/HealthBar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gui/Scores.tscn" type="PackedScene" id=2]
+
+[node name="GUIOverlay" type="Control"]
+margin_left = -0.128517
+margin_right = 639.871
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scores" type="HBoxContainer" parent="." instance=ExtResource( 2 )]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="." instance=ExtResource( 1 )]
+margin_left = 568.129
+margin_top = 336.0
+margin_right = 632.129
+margin_bottom = 350.0

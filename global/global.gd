@@ -6,7 +6,7 @@ var next_scene: String = ""
 var _next_level = 0
 
 export (Array) var level_order = [
-	'res://levels/level1/Level.tscn',
+	'res://levels/level0/Level.tscn',
 	'res://levels/level1/Level.tscn'
 ]
 

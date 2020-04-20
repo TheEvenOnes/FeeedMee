@@ -493,19 +493,3 @@ transform = Transform( 0.997138, 0, 0.0756059, 0, 1, 0, -0.0756059, 0, 0.997138,
 [node name="CollisionShape" type="CollisionShape" parent="LevelBounds/Wall12"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.117598, 0, 0.869327 )
 shape = SubResource( 5 )
-
-[node name="GUIOverlay_Health" type="Control" parent="."]
-margin_right = 640.0
-margin_bottom = 360.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HealthBar" type="ProgressBar" parent="GUIOverlay_Health"]
-margin_left = 541.0
-margin_top = 328.0
-margin_right = 627.0
-margin_bottom = 347.0
-__meta__ = {
-"_edit_use_anchors_": false
-}

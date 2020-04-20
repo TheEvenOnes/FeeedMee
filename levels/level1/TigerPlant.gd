@@ -82,12 +82,32 @@ func process_ai(delta: float) -> void:
 									var level = get_parent()
 									if feeding_on.is_in_group('cow'):
 										level.reduce_score('cow')
+
+										Global.achieve('first_cow', 1)
+										var current = Global.achieved('cows_10')
+										current += 1
+										Global.achieve('cows_10', current)
 									elif feeding_on.is_in_group('pig'):
 										level.reduce_score('pig')
+
+										Global.achieve('first_pig', 1)
+										var current = Global.achieved('pigs_10')
+										current += 1
+										Global.achieve('cows_10', current)
 									elif feeding_on.is_in_group('redneck'):
 										level.reduce_score('redneck')
+
+										Global.achieve('first_villager', 1)
+										var current = Global.achieved('villagers_10')
+										current += 1
+										Global.achieve('cows_10', current)
 									elif feeding_on.is_in_group('joe'):
 										level.reduce_score('joe')
+
+										Global.achieve('first_joe', 1)
+										var current = Global.achieved('joes_10')
+										current += 1
+										Global.achieve('joes_10', current)
 									feeding_on.get_parent().remove_child(feeding_on)
 									feeding_on.queue_free()
 								feeding_on = null

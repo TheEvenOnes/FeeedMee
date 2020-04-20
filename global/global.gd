@@ -75,14 +75,71 @@ func _deferred_goto_scene(path):
 		print('-> done telling loading scene about next scene')
 
 const Achievements: Dictionary = {
-	'first_piggy': {
+	'first_pig': {
 		'sort_id': 0, # Unused; would be used in GUI for achievements
-		'id': 'first_piggy',
+		'id': 'first_pig',
 		'name': 'Deliverance!',
 		'desc': 'Deliver the first piggy',
-		'req': 9,
-		'show_every': 3,
-	}
+		'req': 1,
+		'show_every': 1,
+	},
+	'first_cow': {
+		'sort_id': 1, # Unused; would be used in GUI for achievements
+		'id': 'first_cow',
+		'name': 'Beefy stuff',
+		'desc': 'Deliver the first cow',
+		'req': 1,
+		'show_every': 1,
+	},
+	'first_villager': {
+		'sort_id': 2, # Unused; would be used in GUI for achievements
+		'id': 'first_villager',
+		'name': 'Human sacrifice',
+		'desc': 'Provide a human sacrifice',
+		'req': 1,
+		'show_every': 1,
+	},
+	'first_joe': {
+		'sort_id': 3, # Unused; would be used in GUI for achievements
+		'id': 'first_joe',
+		'name': 'Selflessness',
+		'desc': 'Provide Joe as sustenance',
+		'req': 1,
+		'show_every': 1,
+	},
+	
+	'pigs_10': {
+		'sort_id': 4, # Unused; would be used in GUI for achievements
+		'id': 'pigs_10',
+		'name': "Porkin' around",
+		'desc': 'Provide 10 piggies',
+		'req': 10,
+		'show_every': 2,
+	},
+	'cows_10': {
+		'sort_id': 5, # Unused; would be used in GUI for achievements
+		'id': 'cows_10',
+		'name': 'No missteak',
+		'desc': 'Deliver 10 cows',
+		'req': 10,
+		'show_every': 2,
+	},
+	'villagers_10': {
+		'sort_id': 6, # Unused; would be used in GUI for achievements
+		'id': 'villagers_10',
+		'name': 'Collective sacrifice',
+		'desc': '10x glory to the plant',
+		'req': 10,
+		'show_every': 2,
+	},
+	'joes_10': {
+		'sort_id': 7, # Unused; would be used in GUI for achievements
+		'id': 'joes_10',
+		'name': 'Heroism',
+		'desc': 'Joe is a treasure, 10x',
+		'req': 10,
+		'show_every': 2,
+	},
 }
 
 func achieved(id: String) -> int:

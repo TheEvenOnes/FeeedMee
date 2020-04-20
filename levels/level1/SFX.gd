@@ -81,9 +81,9 @@ func _rndFeed(delta):
 
 	_nextFeedSnd = feedSoundsFreq + rand_range(0, feedSoundsFreq / 2)
 	if int(_nextFeedSnd) % 2 == 1:
-		$FeedMee.play()
+		get_node('../TigerPlant/FeedMee').play()
 	else:
-		$ImHungry.play()
+		get_node('../TigerPlant/ImHungry').play()
 
 ###############################################
 # Enemy sounds

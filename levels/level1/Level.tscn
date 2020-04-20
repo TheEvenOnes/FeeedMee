@@ -321,16 +321,6 @@ bus = "SFXPlant"
 stream = ExtResource( 19 )
 bus = "SFXPlant"
 
-[node name="FeedMee" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource( 22 )
-volume_db = -20.0
-bus = "SFXPlant"
-
-[node name="ImHungry" type="AudioStreamPlayer" parent="SFX"]
-stream = SubResource( 5 )
-volume_db = -20.0
-bus = "SFXPlant"
-
 [node name="GunShot" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 27 )
 bus = "SFXEnemy"
@@ -384,9 +374,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566549, -2.22586 )
 transform = Transform( 1.32205, 0, -0.470918, 0, 1.40342, 0, 0.470918, 0, 1.32205, 13.3885, 1.09797, 9.78304 )
 FLIP_SPRITE = true
 
+[node name="FeedMee" type="AudioStreamPlayer3D" parent="TigerPlant"]
+stream = ExtResource( 22 )
+volume_db = -20.0
+bus = "SFXPlant"
+
+[node name="ImHungry" type="AudioStreamPlayer3D" parent="TigerPlant"]
+stream = SubResource( 6 )
+volume_db = -20.0
+bus = "SFXPlant"
+
 [node name="GUIOverlay" type="Control" parent="."]
-margin_left = -0.128517
-margin_right = 639.871
+margin_right = 640.0
 margin_bottom = 360.0
 __meta__ = {
 "_edit_use_anchors_": false

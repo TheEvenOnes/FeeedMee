@@ -110,8 +110,10 @@ func process_ai(delta: float) -> void:
 						state = VillagerState.Firing
 					elif not is_tired():
 						var x = rng.randf() - 0.5
+						x *= 2.0
 						x = x if abs(x) > 0.1 else 0.1
 						var y = rng.randf() - 0.5
+						y *= 2.0
 						y = y if abs(y) > 0.1 else 0.1
 						villager_direction = Vector3(x, 0.0, y).normalized() * MAX_SPEED
 						state = VillagerState.Moving
@@ -188,7 +190,8 @@ func process_movement(delta):
 		velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 	if has_node('AnimatedSprite3D'):
-		$AnimatedSprite3D.flip_h = velocity.x < 0
+		if abs(velocity.x) > 0.0001:
+			$AnimatedSprite3D.flip_h = velocity.x < 0
 
 func start_held() -> void:
 	collider.disabled = true

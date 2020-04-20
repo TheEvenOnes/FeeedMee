@@ -3,10 +3,30 @@ extends Node2D
 var current_scene = null
 var next_scene: String = ""
 
+var _next_level = 0
+
+export (Array) var level_order = [
+	'res://levels/level1/Level.tscn',
+	'res://levels/level1/Level.tscn'
+]
+
 func _ready():
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() -1)
+
+func next_level():
+	_next_level += 1
+	if _next_level > len(level_order):
+		# victory, got to main menu
+		_next_level = 0
+		goto_loading_scene('res://gui/menu_root.tscn')
+	else:
+		goto_loading_scene(level_order[_next_level])
+
+func goto_menu():
+	_next_level = 0
+	goto_loading_scene('res://gui/menu_root.tscn')
 
 func goto_scene(path):
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html

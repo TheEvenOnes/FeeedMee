@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -30,6 +30,8 @@
 [ext_resource path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" type="Texture" id=31]
 [ext_resource path="res://sprites/tree.png" type="Texture" id=32]
 [ext_resource path="res://sprites/cow.png" type="Texture" id=33]
+[ext_resource path="res://sprites/piglet.png" type="Texture" id=34]
+[ext_resource path="res://sprites/villager1.png" type="Texture" id=35]
 [ext_resource path="res://sprites/joe.png" type="Texture" id=36]
 [ext_resource path="res://gui/FoodCounter.tscn" type="PackedScene" id=37]
 
@@ -76,6 +78,10 @@ extents = Vector3( 0.696539, 2.99078, 7.12252 )
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 12 )
+scores = {
+"cow": 1,
+"joe": 1
+}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
@@ -239,6 +245,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458278, -0.315842, -8.81891
 [node name="Player" type="KinematicBody" parent="." groups=[
 "food",
 "huntable",
+"joe",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.34343, 1.6665, 4.60105 )
 script = ExtResource( 2 )
@@ -323,34 +330,30 @@ bus = "BGM"
 [node name="Animals" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99913, 0 )
 
-[node name="Cow" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.952, 0.153235, -9.9445 )
-
-[node name="Piglet" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 0.602338, 0.145164, -9.36789 )
-SPRITE = ExtResource( 23 )
-HonkAudioStream = ExtResource( 26 )
-
-[node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17819, 0.153235, -11.1794 )
-
-[node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310003, 0.153235, -11.513 )
-
-[node name="Cow1" parent="Animals" instance=ExtResource( 20 )]
+[node name="Cow1" parent="Animals" groups=[
+"cow",
+] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300506, 0.385901, -9.69358 )
 
-[node name="Cow2" parent="Animals" instance=ExtResource( 20 )]
+[node name="Cow2" parent="Animals" groups=[
+"cow",
+] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33151, 0.385901, -10.0444 )
 
-[node name="Cow3" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.861684, 0.711301, -11.5628 )
+[node name="Cow3" parent="Animals" groups=[
+"cow",
+] instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.49412, 0.57921, 7.54287 )
 
-[node name="Pig1" parent="Animals" instance=ExtResource( 20 )]
-transform = Transform( 0.599424, 0, 0, 0, 0.599424, 0, 0, 0, 1, 0.861684, 0.581083, -10.8053 )
+[node name="Piglet" parent="Animals" groups=[
+"pig",
+] instance=ExtResource( 20 )]
+transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 0.602338, 0.145164, -9.36789 )
 SPRITE = ExtResource( 23 )
 
-[node name="Villager" parent="Animals" instance=ExtResource( 28 )]
+[node name="Villager" parent="Animals" groups=[
+"redneck",
+] instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566549, -2.22586 )
 
 [node name="TigerPlant" parent="." instance=ExtResource( 6 )]
@@ -371,15 +374,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CowCounter" parent="GUIOverlay" instance=ExtResource( 37 )]
-IMAGE = ExtResource( 33 )
-NOMS_LEFT = 4
+[node name="Scores" type="HBoxContainer" parent="GUIOverlay"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="JoeCounter" parent="GUIOverlay" instance=ExtResource( 37 )]
-margin_left = 40.1285
-margin_right = 80.1285
+[node name="CowCounter" parent="GUIOverlay/Scores" instance=ExtResource( 37 )]
+margin_left = 0.0
+margin_right = 40.0
+IMAGE = ExtResource( 33 )
+NOMS_LEFT = -1
+KEY = "cow"
+
+[node name="PigCounter" parent="GUIOverlay/Scores" instance=ExtResource( 37 )]
+margin_left = 44.0
+margin_right = 84.0
+IMAGE = ExtResource( 34 )
+NOMS_LEFT = -1
+KEY = "pig"
+
+[node name="RedneckCounter" parent="GUIOverlay/Scores" instance=ExtResource( 37 )]
+margin_left = 88.0
+margin_right = 128.0
+IMAGE = ExtResource( 35 )
+NOMS_LEFT = -1
+KEY = "redneck"
+
+[node name="JoeCounter" parent="GUIOverlay/Scores" instance=ExtResource( 37 )]
+margin_left = 132.0
+margin_right = 172.0
 IMAGE = ExtResource( 36 )
 NOMS_LEFT = 1
+KEY = "joe"
 
 [node name="LevelBounds" type="Spatial" parent="."]
 

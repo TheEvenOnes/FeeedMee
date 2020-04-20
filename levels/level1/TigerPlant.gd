@@ -78,6 +78,16 @@ func process_ai(delta: float) -> void:
 							if feeding_on != null:
 								print(feeding_on.global_transform.origin.distance_to(global_transform.origin))
 								if feeding_on.global_transform.origin.distance_to(global_transform.origin) < 1.5:
+									# update score
+									var level = get_parent()
+									if feeding_on.is_in_group('cow'):
+										level.reduce_score('cow')
+									elif feeding_on.is_in_group('pig'):
+										level.reduce_score('pig')
+									elif feeding_on.is_in_group('redneck'):
+										level.reduce_score('redneck')
+									elif feeding_on.is_in_group('joe'):
+										level.reduce_score('joe')
 									feeding_on.get_parent().remove_child(feeding_on)
 									feeding_on.queue_free()
 								feeding_on = null

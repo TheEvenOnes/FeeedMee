@@ -44,7 +44,7 @@ func hurt(amount: float) -> void:
 		die()
 
 func die() -> void:
-	pass
+	Global.goto_menu()
 
 func get_distance_to_bottom() -> float:
 	if ray_cast != null:

@@ -48,18 +48,9 @@ var _plantEat:bool
 var _plantEatTime:float
 
 func plantEat(what:int):
-	$DeadCow.stop()
-	$DeadPig.stop()
-	$DeadCow.bus = "SFXPlant"
-	$DeadPig.bus = "SFXPlant"
 	$Eating.stop()
 	_plantEat = true
 	_plantEatTime = 0
-	match what:
-		0:
-			$DeadCow.play()
-		1:
-			$DeadPig.play()
 
 func _plantEatPlay(delta):
 	if !_plantEat:
@@ -84,27 +75,3 @@ func _rndFeed(delta):
 		get_node('../TigerPlant/FeedMee').play()
 	else:
 		get_node('../TigerPlant/ImHungry').play()
-
-###############################################
-# Enemy sounds
-
-func enemyGunShot():
-	$GunShot.play()
-
-func enemyGetOffMyLawn():
-	if !$GetOffMyLawn.playing:
-		return
-	$GetOffMyLawn.play()
-
-###############################################
-# Animal SFX
-
-func animalGetRelease(what:String):
-	var snd = null
-	if what.find("Cow") >= 0:
-		snd = $DeadCow
-	if what.find("Pig") >= 0:
-		snd = $DeadPig
-	if null != snd:	
-		snd.bus = "SFXPlayer"
-		snd.play()

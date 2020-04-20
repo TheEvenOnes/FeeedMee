@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://levels/level1/Villager.gd" type="Script" id=1]
 [ext_resource path="res://sprites/villager1.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://sound/get_off_my_lawn.ogg" type="AudioStream" id=3]
 [ext_resource path="res://actors/SoundPlayer.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -50,12 +51,10 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 1
 playing = true
 
-[node name="Walking" type="AudioStreamPlayer" parent="."]
+[node name="Walking" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource( 3 )
-volume_db = -50.0
 script = ExtResource( 4 )
 FREQUENCY = 2.0
 
@@ -68,3 +67,6 @@ shape = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="FiringRangeScanner"]
 shape = SubResource( 5 )
+
+[node name="Honk" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )

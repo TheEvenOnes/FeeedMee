@@ -108,6 +108,7 @@ func is_tired() -> bool:
 func stop_moving() -> void:
 	if villager_direction.length_squared() > 0.01:
 		villager_direction = Vector3.ZERO
+		$Walking.want_sound = false
 
 func process_ai(delta: float) -> void:
 	if not Engine.is_editor_hint():
@@ -165,6 +166,7 @@ func process_ai(delta: float) -> void:
 				hunger = clamp(hunger + delta, 0.0, MAX_HUNGER)
 				# and tired
 				tired = clamp(tired + delta, 0.0, MAX_TIRED)
+				$Walking.want_sound = true
 
 				if is_hungry():
 					stop_moving()
@@ -181,6 +183,7 @@ func process_ai(delta: float) -> void:
 				play('walking')
 				hunger = 0.0
 				tired = 0.0
+				honk()
 
 			VillagerState.Hunting:
 				play('walking')
@@ -279,6 +282,7 @@ func start_held() -> void:
 	collider.disabled = true
 	ray_cast.enabled = false
 	state = VillagerState.Held
+	honk()
 
 func stop_held(velocity: Vector3) -> void:
 	throw_velocity = velocity
@@ -293,17 +297,30 @@ func stop_held(velocity: Vector3) -> void:
 # Returns new movement direction for the villager if necessary.
 func evaluate_hunt(villager_direction: Vector3) -> Vector3:
 	var bodies = huntable_scanner.get_overlapping_bodies()
-	hunt_target = null
+	var found: Node = null
 	for body in bodies:
 		if body.is_in_group('huntable'):
-			hunt_target = body
+			found = body
 			state = VillagerState.Hunting
+			break
+
+	if hunt_target == null and found != null:
+		# found someone
+		hunt_target = found
+		honk()
+
+	if found == null:
+		hunt_target = null
 
 	if hunt_target == null and (
 		state == VillagerState.Hunting or state == VillagerState.HuntingShoot):
+			# already was hunting, but lost the target
 			state = VillagerState.Idle
 			stop_moving()
 			tired = MAX_TIRED
 			hunger = 0.0
 
 	return villager_direction
+
+func honk() -> void:
+	$Honk.play(2.0) # just 'get off my lawn' part

@@ -15,6 +15,8 @@ export (float) var MAX_SLOPE_ANGLE = 30
 
 export (SpriteFrames) var SPRITE setget set_sprite, get_sprite
 
+export (AudioStream) var HonkAudioStream = preload("res://sound/Mudchute_cow_1.ogg")
+
 var _sprite = null
 var velocity = Vector3()
 var direction = Vector3()
@@ -22,6 +24,7 @@ var direction = Vector3()
 onready var ray_cast = $RayCast
 onready var collider = $CollisionShape
 onready var sfx = $Walking
+onready var honk = $Honk
 
 var rng = RandomNumberGenerator.new()
 
@@ -42,8 +45,13 @@ var throw_velocity = Vector3.ZERO
 
 func _ready() -> void:
 	rng.randomize()
+
 	if has_node('AnimatedSprite3D'):
 		$AnimatedSprite3D.frames = _sprite
+
+	if not Engine.is_editor_hint():
+		HonkAudioStream.set_loop(false)
+		$Honk.stream = HonkAudioStream
 
 func set_sprite(frames: SpriteFrames) -> void:
 	_sprite = frames
@@ -197,9 +205,11 @@ func start_held() -> void:
 	collider.disabled = true
 	ray_cast.enabled = false
 	state = AnimalState.Held
+	$Honk.play()
 
 func stop_held(new_throw_velocity: Vector3) -> void:
 	throw_velocity = new_throw_velocity
 	ray_cast.enabled = true
 	collider.disabled = false
 	state = AnimalState.Thrown
+	$Honk.play()

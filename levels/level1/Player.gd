@@ -39,6 +39,12 @@ func _physics_process(delta: float) -> void:
 
 func hurt(amount: float) -> void:
 	health_now -= amount
+	$PlayerHurt.play()
+	if health_now < 0:
+		die()
+	
+func die() -> void:
+	pass
 
 func get_distance_to_bottom() -> float:
 	if ray_cast != null:
@@ -122,7 +128,8 @@ func process_held_object(delta) -> void:
 						fst.transform.origin = Vector3.ZERO
 						state = PlayerState.Holding
 						held_object = fst
-						sfx.animalGetRelease(fst.name)
+						if held_object.has_method('honk'):
+							held_object.honk()
 						break
 	elif state == PlayerState.Holding:
 		if Input.is_action_just_pressed('player_action'):
@@ -137,7 +144,8 @@ func process_held_object(delta) -> void:
 				throw_velocity = Vector3(velocity.x, 3.0, velocity.z).normalized() * 6.0
 			held_object.stop_held(throw_velocity)
 			held_object.global_transform.origin = hold_mount.global_transform.origin
-			sfx.animalGetRelease(held_object.name)
+			if held_object.has_method('honk'):
+				held_object.honk()
 			held_object = null
 			state = PlayerState.Idle
 

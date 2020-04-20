@@ -8,8 +8,8 @@ export (float) var MAX_TIRED = 3.0
 export (float) var AI_DECISION_SPEED = 2.0
 
 export (float) var GRAVITY = -24.8
-export (float) var MAX_SPEED = 0.5
-export (float) var ACCEL = 1
+export (float) var MAX_SPEED = 2.5
+export (float) var ACCEL = 4
 export (float) var DEACCEL = 16
 export (float) var MAX_SLOPE_ANGLE = 30
 
@@ -21,11 +21,12 @@ export (SpriteFrames) var SPRITE setget set_sprite, get_sprite
 
 var _sprite = null
 var velocity = Vector3()
-var direction = Vector3()
 
 onready var ray_cast = $RayCast
 onready var collider = $CollisionShape
 onready var sfx = $Walking
+onready var huntable_scanner: Area = $HuntableScanner
+onready var firing_range_scanner: Area = $FiringRangeScanner
 
 var rng = RandomNumberGenerator.new()
 
@@ -34,7 +35,10 @@ enum VillagerState {
 	Firing = 1,
 	Moving = 2,
 	Held = 3,
-	Thrown = 4
+	Thrown = 4,
+
+	Hunting = 5,
+	HuntingShoot = 6,
 }
 
 var state = VillagerState.Idle
@@ -43,6 +47,8 @@ var hunger = 0.0
 var tired = 0.0
 var villager_direction = Vector3.ZERO
 var throw_velocity = Vector3.ZERO
+var hunt_target: Spatial = null
+var hunt_shoot_progress: float = 0
 
 # Villager stays around the spawn location.
 var spawn_location: Vector3 = Vector3.ZERO
@@ -101,9 +107,6 @@ func stop_moving() -> void:
 
 func process_ai(delta: float) -> void:
 	if not Engine.is_editor_hint():
-		direction = Vector3()
-
-		var movement_vector = Vector3.ZERO
 
 		next_decision_in = clamp(next_decision_in - delta, 0.0, 1.0)
 		match state:
@@ -123,25 +126,24 @@ func process_ai(delta: float) -> void:
 						var y = rng.randf() - 0.5
 						y *= 2.0
 						y = y if abs(y) > 0.1 else 0.1
-						villager_direction = Vector3(x, 0.0, y).normalized() * MAX_SPEED
+						villager_direction = Vector3(x, 0.0, y).normalized()
 
 						# There is a certain "nudge back" shell around the
 						# spawn location of the villager.
 						# Is the villager inside this  "nudge back" shell, or
 						# even beyond it?
 						var current_location: Vector3 = global_transform.origin
-						print('dist to spawn: ', current_location.distance_to(spawn_location))
 						if current_location.distance_to(spawn_location) > NUDGE_BACK_INNER:
 							var nudge_strength = (current_location.distance_to(spawn_location) - NUDGE_BACK_INNER) / (NUDGE_BACK_OUTER - NUDGE_BACK_INNER)
-							print('nudging back with strength ', nudge_strength)
 							nudge_strength = clamp(nudge_strength, 0.0, 1.0)
-							print('clamped to ', nudge_strength)
-							print(' (going from chosen direction ', villager_direction.normalized(), ' to ', current_location.direction_to(spawn_location), '...')
 							villager_direction = villager_direction.normalized().slerp(current_location.direction_to(spawn_location), nudge_strength)
-							print('   choosing ', villager_direction, ')')
-							villager_direction = villager_direction.normalized() * MAX_SPEED
+							villager_direction = villager_direction.normalized()
 
 						state = VillagerState.Moving
+
+				# Note: state and hunt_target can be updated by evaluate_hunt
+				# Evaluated even if the villager is not bored.
+				villager_direction = evaluate_hunt(villager_direction)
 
 			VillagerState.Firing:
 				play('firing')
@@ -167,22 +169,55 @@ func process_ai(delta: float) -> void:
 					stop_moving()
 					state = VillagerState.Idle
 
+				# Note: state and hunt_target can be updated by evaluate_hunt
+				# Evaluated even if the villager is not bored.
+				villager_direction = evaluate_hunt(villager_direction)
+
 			VillagerState.Held:
 				play('walking')
 				hunger = 0.0
 				tired = 0.0
 
-		movement_vector = villager_direction
-		velocity += movement_vector
+			VillagerState.Hunting:
+				play('walking')
+				hunger = 0.0
+				tired = 0.0
+				villager_direction = global_transform.origin.direction_to(
+					hunt_target.global_transform.origin)
+				if not huntable_scanner.overlaps_body(hunt_target):
+					#print("lost the target which was ", hunt_target)
+					villager_direction = evaluate_hunt(villager_direction)
+				else:
+					#print("still overlaps")
+					pass
 
-		if state == VillagerState.Held:
-			velocity = Vector3.ZERO
+				# confirm we still have a hunt_target
+				if hunt_target != null:
+					if firing_range_scanner.overlaps_body(hunt_target):
+						#print("in firing range - distance is ", global_transform.origin.distance_to(
+						#	hunt_target.global_transform.origin))
+						state = VillagerState.HuntingShoot
+						hunt_shoot_progress = 0.0
+						stop_moving()
+						$AnimatedSprite3D.flip_h = global_transform.origin.direction_to(
+							hunt_target.global_transform.origin).y < 0
+					else:
+						#print("out of firing range - distance is ", global_transform.origin.distance_to(
+						#	hunt_target.global_transform.origin))
+						pass
+
+			VillagerState.HuntingShoot:
+				play('firing')
+				hunt_shoot_progress += delta
+				if hunt_shoot_progress > 2.0:
+					villager_direction = evaluate_hunt(villager_direction)
 
 func process_movement(delta):
 	if not Engine.is_editor_hint():
-		direction.y = 0
+		villager_direction.y = 0
 
 		if state == VillagerState.Held:
+			velocity = Vector3.ZERO
 			return
 
 		if state == VillagerState.Thrown:
@@ -197,19 +232,19 @@ func process_movement(delta):
 		if not is_on_floor():
 			velocity.y += delta * GRAVITY
 
-		var horizontal_velocity = velocity
+		var horizontal_velocity: Vector3 = velocity
 		horizontal_velocity.y = 0
 
-		var target = direction
+		var target = villager_direction.normalized()
 		target *= MAX_SPEED
 
 		var acceleration
-		if direction.dot(horizontal_velocity) > 0:
+		if villager_direction.normalized().dot(horizontal_velocity) > 0:
 				acceleration = ACCEL
 		else:
 				acceleration = DEACCEL
 
-		horizontal_velocity = horizontal_velocity.linear_interpolate(target, acceleration * delta)
+		horizontal_velocity = horizontal_velocity.move_toward(target, acceleration * delta)
 		velocity.x = horizontal_velocity.x
 		velocity.z = horizontal_velocity.z
 		velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
@@ -228,3 +263,25 @@ func stop_held(velocity: Vector3) -> void:
 	ray_cast.enabled = true
 	collider.disabled = false
 	state = VillagerState.Thrown
+
+# Chooses whether to begin a hunt, and updates object-level var 'state'.
+#
+# Updates hunt_target. May update hunt_target to null.
+#
+# Returns new movement direction for the villager if necessary.
+func evaluate_hunt(villager_direction: Vector3) -> Vector3:
+	var bodies = huntable_scanner.get_overlapping_bodies()
+	hunt_target = null
+	for body in bodies:
+		if body.is_in_group('huntable'):
+			hunt_target = body
+			state = VillagerState.Hunting
+
+	if hunt_target == null and (
+		state == VillagerState.Hunting or state == VillagerState.HuntingShoot):
+			state = VillagerState.Idle
+			stop_moving()
+			tired = MAX_TIRED
+			hunger = 0.0
+
+	return villager_direction

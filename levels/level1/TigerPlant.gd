@@ -69,7 +69,6 @@ func process_ai(delta: float) -> void:
 							food.sort_custom(self, 'sorter')
 							feeding_on = food[0]
 							state = TigerPlantState.DEVOURING
-							break
 					play('idle')
 
 				TigerPlantState.DEVOURING:

@@ -42,6 +42,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 3 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Devouring" type="AudioStreamPlayer" parent="."]

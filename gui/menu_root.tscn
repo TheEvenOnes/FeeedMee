@@ -1,32 +1,146 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://gui/menu.tscn" type="PackedScene" id=1]
-[ext_resource path="res://gui/menu_camera_rotate.gd" type="Script" id=2]
+[ext_resource path="res://actors/TigerPlant.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sound/menu.ogg" type="AudioStream" id=3]
 [ext_resource path="res://gui/controls_diskio.gd" type="Script" id=4]
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=5]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" type="Script" id=6]
+[ext_resource path="res://terrain_data/main_menu/data.hterrain" type="Resource" id=7]
+[ext_resource path="res://sprites/dirt.png" type="Texture" id=8]
+[ext_resource path="res://sprites/stones.png" type="Texture" id=9]
+[ext_resource path="res://sprites/grass_splat.png" type="Texture" id=10]
+[ext_resource path="res://sprites/grass.png" type="Texture" id=11]
+[ext_resource path="res://sprites/bush.png" type="Texture" id=13]
+[ext_resource path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" type="Texture" id=14]
+[ext_resource path="res://sprites/tree.png" type="Texture" id=15]
+[ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=16]
+[ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=17]
 
 [sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.392157, 0.160784, 0.0196078, 1 )
-sky_horizon_color = Color( 0.980392, 0.878431, 0.317647, 1 )
+ground_bottom_color = Color( 0.839216, 0.917647, 0.980392, 1 )
+ground_horizon_color = Color( 0.839216, 0.917647, 0.980392, 1 )
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
+background_color = Color( 0.572549, 0.956863, 0.984314, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+fog_color = Color( 1, 1, 1, 1 )
+fog_sun_color = Color( 0.568627, 1, 1, 1 )
+fog_depth_begin = 8.0
+fog_depth_end = 18.0
+fog_depth_curve = 0.5
+fog_transmit_curve = 0.965938
+ssao_radius = 2.0
+ssao_quality = 0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 7.5
+dof_blur_far_quality = 2
+dof_blur_near_enabled = true
+glow_intensity = 4.0
+glow_strength = 1.5
+glow_hdr_threshold = 1.13
+glow_bicubic_upscale = true
+adjustment_brightness = 0.82
+adjustment_contrast = 1.18
+adjustment_saturation = 1.26
+
+[sub_resource type="Animation" id=3]
+resource_name = "CameraMove"
+length = 8.0
+loop = true
+step = 1.0
+tracks/0/type = "transform"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 9.36536, 0, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 2, 1, -1.57979, 9.36536, -0.20096, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 4, 1, -2.4542, 8.8335, -0.468959, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 6, 1, -1.03466, 9.36536, 1.42446, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1, 8, 1, 0, 9.36536, 0, 0.133408, -0.324722, 0.0463217, 0.935207, 1, 1, 1 )
 
 [node name="Spatial" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.78482, -0.173282, -0.595005, 0, 0.960113, -0.279611, 0.619724, 0.219444, 0.753516, 0, 0.876117, 0 )
+[node name="HTerrain" type="Spatial" parent="." groups=[
+"terrain",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 0, -64 )
+script = ExtResource( 5 )
+collision_enabled = true
+ambient_wind = 0.2
+lod_scale = 2.0
+map_scale = Vector3( 0.25, 0.5, 0.25 )
+_terrain_data = ExtResource( 7 )
+chunk_size = 32
+shader_type = "Classic4Lite"
+custom_shader = null
+shader_params/u_ground_uv_scale = 5.0
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+ground/albedo_bump_0 = ExtResource( 11 )
+ground/normal_roughness_0 = null
+ground/albedo_bump_1 = ExtResource( 9 )
+ground/normal_roughness_1 = null
+ground/albedo_bump_2 = ExtResource( 8 )
+ground/normal_roughness_2 = null
+ground/albedo_bump_3 = null
+ground/normal_roughness_3 = null
+
+[node name="Grass" type="Spatial" parent="HTerrain"]
+script = ExtResource( 6 )
+layer_index = 0
+texture = ExtResource( 10 )
+view_distance = 100.0
+custom_shader = null
+density = 10.0
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+
+[node name="Bushes" type="Spatial" parent="HTerrain"]
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_icon": ExtResource( 14 )
+}
+layer_index = 1
+texture = ExtResource( 13 )
+view_distance = 100.0
+custom_shader = null
+density = 4.0
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+
+[node name="Trees" type="Spatial" parent="HTerrain"]
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_icon": ExtResource( 14 )
+}
+layer_index = 2
+texture = ExtResource( 15 )
+view_distance = 100.0
+custom_shader = null
+density = 10.0
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.20435, 0 )
+
+[node name="Camera" type="Camera" parent="Position3D"]
+transform = Transform( 0.78482, -0.173282, -0.595005, 0, 0.960113, -0.279611, 0.619724, 0.219444, 0.753516, -0.387418, 9.38251, -0.0442281 )
 fov = 57.1
-script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Position3D/Camera"]
+autoplay = "CameraMove"
+playback_speed = 0.1
+anims/CameraMove = SubResource( 3 )
 
 [node name="GUI" parent="." instance=ExtResource( 1 )]
-
-[node name="CSGSphere" type="CSGSphere" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.47316, 1.34426, -3.87856 )
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
@@ -35,3 +149,45 @@ bus = "BGM"
 
 [node name="Controls_DiskIO" type="Spatial" parent="."]
 script = ExtResource( 4 )
+
+[node name="Animals" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.36732, 0 )
+
+[node name="Cow1" parent="Animals" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445483, 8.95289, -6.6666 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+
+[node name="Cow2" parent="Animals" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, -1.50996e-07, 0, 1.50996e-07, 1, 1.8162, 9.56989, -5.46722 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+
+[node name="Cow3" parent="Animals" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96304, 10.0928, -6.6666 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+
+[node name="Piggy" parent="Animals" instance=ExtResource( 16 )]
+transform = Transform( 0.771503, 0, 0, 0, 0.771503, 0, 0, 0, 0.771503, 1.66317, 8.9735, -5.13857 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+SPRITE = ExtResource( 17 )
+
+[node name="TigerPlant" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.40116, 5.24896, -4.18042 )
+FLIP_SPRITE = true
+
+[node name="SpotLight" type="SpotLight" parent="."]

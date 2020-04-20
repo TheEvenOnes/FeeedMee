@@ -37,7 +37,6 @@ background_mode = 2
 background_sky = SubResource( 1 )
 background_color = Color( 0.572549, 0.956863, 0.984314, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
-fog_enabled = true
 fog_color = Color( 0, 0, 0, 1 )
 fog_sun_color = Color( 0.568627, 1, 1, 1 )
 fog_depth_begin = 8.0
@@ -46,10 +45,8 @@ fog_depth_curve = 0.5
 fog_transmit_curve = 0.965938
 ssao_radius = 2.0
 ssao_quality = 0
-dof_blur_far_enabled = true
 dof_blur_far_distance = 7.5
 dof_blur_far_quality = 2
-dof_blur_near_enabled = true
 dof_blur_near_distance = 5.0
 glow_intensity = 4.0
 glow_strength = 1.5
@@ -353,10 +350,11 @@ AI_DECISION_SPEED = 2.0
 GRAVITY = -24.8
 DEACCEL = 16.0
 MAX_SLOPE_ANGLE = 30.0
+NUDGE_BACK_INNER = 1.5
+NUDGE_BACK_OUTER = 7.0
 
 [node name="TigerPlant" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30323, 0.0512025, -4.11501 )
-AI_DECISION_SPEED = 2.0
 
 [node name="GUIOverlay" type="Control" parent="."]
 margin_right = 640.0

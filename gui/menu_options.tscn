@@ -70,6 +70,8 @@ anims/sz = SubResource( 2 )
 [node name="Instruction" type="Label" parent="."]
 margin_right = 416.0
 margin_bottom = 14.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = ".:: change your options ::."
 align = 1
 
@@ -140,4 +142,6 @@ script = ExtResource( 3 )
 [node name="Label" type="Label" parent="ResetToDefault"]
 margin_right = 157.0
 margin_bottom = 14.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Reset controls to default"

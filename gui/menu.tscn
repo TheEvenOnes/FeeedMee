@@ -48,11 +48,13 @@ end_cap_mode = 1
 antialiased = true
 
 [node name="Start" type="Label" parent="Camera2D/Selector"]
-margin_left = 417.773
-margin_top = 191.211
-margin_right = 449.773
-margin_bottom = 205.211
+margin_left = 424.0
+margin_top = 200.0
+margin_right = 456.0
+margin_bottom = 214.0
 rect_pivot_offset = Vector2( -96, -16 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Start"
 align = 1
 valign = 1
@@ -61,11 +63,13 @@ __meta__ = {
 }
 
 [node name="Options" type="Label" parent="Camera2D/Selector"]
-margin_left = 398.773
-margin_top = 218.183
-margin_right = 449.773
-margin_bottom = 232.183
+margin_left = 404.0
+margin_top = 216.0
+margin_right = 455.0
+margin_bottom = 230.0
 rect_pivot_offset = Vector2( -96, -16 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Options"
 align = 2
 valign = 1
@@ -74,11 +78,13 @@ __meta__ = {
 }
 
 [node name="Exit" type="Label" parent="Camera2D/Selector"]
-margin_left = 426.773
-margin_top = 236.162
-margin_right = 449.773
-margin_bottom = 250.162
+margin_left = 432.0
+margin_top = 232.0
+margin_right = 455.0
+margin_bottom = 246.0
 rect_pivot_offset = Vector2( -96, -16 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Exit"
 align = 2
 valign = 1

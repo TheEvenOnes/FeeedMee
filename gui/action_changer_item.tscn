@@ -21,6 +21,8 @@ __meta__ = {
 margin_right = 55.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Move up"
 
 [node name="Action1" type="Label" parent="."]
@@ -28,6 +30,8 @@ margin_left = 59.0
 margin_right = 119.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 0 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "[X]"
 align = 2
 
@@ -36,4 +40,6 @@ margin_left = 123.0
 margin_right = 183.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 0 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "[axis -10]"

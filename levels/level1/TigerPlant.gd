@@ -3,9 +3,9 @@ extends KinematicBody
 
 export (float) var AI_DECISION_SPEED = 2.0
 
-export (SpriteFrames) var SPRITE setget set_sprite, get_sprite
+export (bool) var FLIP_SPRITE setget set_flip, get_flip
+var _flip = false
 
-var _sprite = null
 var velocity = Vector3()
 var direction = Vector3()
 
@@ -28,18 +28,15 @@ var feeding_on = null
 func _ready() -> void:
 	rng.randomize()
 	if has_node('AnimatedSprite3D'):
-		$AnimatedSprite3D.frames = _sprite
+		$AnimatedSprite3D.flip_h = _flip
 
-func on_finished():
-	print('srbija')
-
-func set_sprite(frames: SpriteFrames) -> void:
-	_sprite = frames
+func set_flip(flip: bool) -> void:
+	_flip = flip
 	if has_node('AnimatedSprite3D'):
-		$AnimatedSprite3D.frames = _sprite
+		$AnimatedSprite3D.flip_h = _flip
 
-func get_sprite() -> SpriteFrames:
-	return _sprite
+func get_flip() -> bool:
+	return _flip
 
 func _physics_process(delta: float) -> void:
 	process_ai(delta)

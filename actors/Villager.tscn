@@ -19,10 +19,10 @@ data = PoolByteArray( 199, 255, 240, 255, 250, 255, 156, 255, 76, 0, 245, 255, 2
 format = 1
 
 [sub_resource type="SphereShape" id=4]
-radius = 3.17773
+radius = 2.71505
 
 [sub_resource type="SphereShape" id=5]
-radius = 1.29492
+radius = 1.91827
 
 [node name="Villager" type="KinematicBody" groups=[
 "food",

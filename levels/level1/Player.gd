@@ -10,11 +10,15 @@ export (float) var MAX_SLOPE_ANGLE = 30
 var velocity = Vector3()
 var direction = Vector3()
 
+var health_now: float = 100.0
+var health_max: float = 100.0
+
 onready var ray_cast = $RayCast
 onready var sprite = $AnimatedSprite3D
 onready var holdable_scanner = $Area
 onready var hold_mount = $HoldMount
 onready var sfx = get_node("../SFX")
+onready var health_bar = get_node("../GUIOverlay_Health/HealthBar")
 
 enum PlayerState {
 	Idle = 0,
@@ -29,6 +33,12 @@ func _physics_process(delta: float) -> void:
 		process_input(delta)
 		process_movement(delta)
 		process_held_object(delta)
+		
+		health_bar.max_value = health_max
+		health_bar.value = health_now
+
+func hurt(amount: float) -> void:
+	health_now -= amount
 
 func get_distance_to_bottom() -> float:
 	if ray_cast != null:

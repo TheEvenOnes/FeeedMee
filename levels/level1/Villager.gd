@@ -17,6 +17,8 @@ export (float) var MAX_SLOPE_ANGLE = 30
 export (float) var NUDGE_BACK_INNER = 1.5
 export (float) var NUDGE_BACK_OUTER = 7
 
+const BULLET_SPEED = 15.0
+
 export (SpriteFrames) var SPRITE setget set_sprite, get_sprite
 
 var _sprite = null
@@ -48,7 +50,9 @@ var tired = 0.0
 var villager_direction = Vector3.ZERO
 var throw_velocity = Vector3.ZERO
 var hunt_target: Spatial = null
+var hunt_shoot_dir: Vector3
 var hunt_shoot_progress: float = 0
+var hunt_shoot_shot: bool
 
 # Villager stays around the spawn location.
 var spawn_location: Vector3 = Vector3.ZERO
@@ -197,10 +201,13 @@ func process_ai(delta: float) -> void:
 						#print("in firing range - distance is ", global_transform.origin.distance_to(
 						#	hunt_target.global_transform.origin))
 						state = VillagerState.HuntingShoot
+						#hunt_shoot_dir = velocity.normalized()
+						hunt_shoot_dir = global_transform.origin.direction_to(
+							hunt_target.global_transform.origin)
 						hunt_shoot_progress = 0.0
+						hunt_shoot_shot = false
 						stop_moving()
-						$AnimatedSprite3D.flip_h = global_transform.origin.direction_to(
-							hunt_target.global_transform.origin).y < 0
+						$AnimatedSprite3D.flip_h = hunt_shoot_dir.x < 0
 					else:
 						#print("out of firing range - distance is ", global_transform.origin.distance_to(
 						#	hunt_target.global_transform.origin))
@@ -209,8 +216,23 @@ func process_ai(delta: float) -> void:
 			VillagerState.HuntingShoot:
 				play('firing')
 				hunt_shoot_progress += delta
-				if hunt_shoot_progress > 2.0:
+				if hunt_shoot_progress > 0.4 and not hunt_shoot_shot: # 4th frame; 11 frames at 11 fps
+					var bullet = load('res://actors/Bullet.tscn').instance()
+					add_child(bullet)
+					bullet.global_transform = Transform(
+						hunt_shoot_dir,
+						Vector3.UP,
+						hunt_shoot_dir.cross(Vector3.UP),
+						global_transform.origin)
+					bullet.velocity = hunt_shoot_dir * BULLET_SPEED
+					hunt_shoot_shot = true
+					$AnimatedSprite3D.flip_h = hunt_shoot_dir.x < 0
+
+				if hunt_shoot_progress > 1.0:
+					# Switch us back to Hunting or to Moving or something.
+					# We can easily get back to HuntingShoot from there.
 					villager_direction = evaluate_hunt(villager_direction)
+					
 
 func process_movement(delta):
 	if not Engine.is_editor_hint():

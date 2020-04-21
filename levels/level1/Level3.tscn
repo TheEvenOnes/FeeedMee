@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -21,7 +21,9 @@
 [ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=19]
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=20]
 [ext_resource path="res://sprites/dirt.png" type="Texture" id=21]
+[ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=23]
+[ext_resource path="res://sound/Mudchute_pig_2.ogg" type="AudioStream" id=24]
 [ext_resource path="res://sound/die.ogg" type="AudioStream" id=25]
 [ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=28]
 [ext_resource path="res://sound/game_music.ogg" type="AudioStream" id=29]
@@ -277,6 +279,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
@@ -333,50 +336,104 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99913, 0 )
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300506, 0.385901, -9.69358 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 22 )
 
 [node name="Cow4" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71286, 0.385901, -11.5124 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 22 )
 
 [node name="Cow5" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.614648, 0.385901, -11.2312 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 22 )
 
 [node name="Cow2" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33151, 0.385901, -10.0444 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 22 )
 
 [node name="Cow3" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.49412, 0.57921, 7.54287 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 22 )
 
 [node name="Piglet" parent="Animals" groups=[
 "pig",
 ] instance=ExtResource( 20 )]
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 0.602338, 0.145164, -9.36789 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
+HonkAudioStream = ExtResource( 24 )
 
 [node name="Piglet2" parent="Animals" groups=[
 "pig",
 ] instance=ExtResource( 20 )]
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, -1.63844, 0.145164, -10.1768 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
+HonkAudioStream = ExtResource( 24 )
 
 [node name="Piglet3" parent="Animals" groups=[
 "pig",
 ] instance=ExtResource( 20 )]
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 5.23014, 0.271623, -8.26171 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
+HonkAudioStream = ExtResource( 24 )
 
 [node name="Piglet4" parent="Animals" groups=[
 "pig",
 ] instance=ExtResource( 20 )]
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 4.53622, 0.285306, -5.29017 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 23 )
+HonkAudioStream = ExtResource( 24 )
 
 [node name="Villager" parent="Animals" groups=[
 "redneck",

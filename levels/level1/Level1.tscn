@@ -272,22 +272,46 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05985, 0.25408, -4.77417 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 32 )
 
 [node name="Cow2" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.74611, 0.0513482, -4.26086 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 32 )
 
 [node name="Cow3" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.91803, 0.256691, -6.05203 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
+HonkAudioStream = ExtResource( 32 )
 
 [node name="Piglet" parent="Animals" groups=[
 "pig",
 ] instance=ExtResource( 20 )]
 transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 15.1738, 0, 0 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+DEACCEL = 16.0
 SPRITE = ExtResource( 5 )
+HonkAudioStream = ExtResource( 31 )
 
 [node name="Villager" parent="Animals" groups=[
 "redneck",

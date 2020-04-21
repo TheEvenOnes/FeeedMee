@@ -100,14 +100,13 @@ method_call_mode = 1
 anims/pulse = SubResource( 1 )
 
 [node name="Label" type="Label" parent="Camera2D"]
-margin_left = -303.24
-margin_top = -166.962
-margin_right = -234.24
-margin_bottom = -152.962
-rect_scale = Vector2( 6.06996, 6.23482 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+margin_left = -303.0
+margin_top = -167.0
+margin_right = -235.0
+margin_bottom = -153.0
+rect_scale = Vector2( 2.8853, 2.94175 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "FEEED MEE"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -118,9 +117,8 @@ margin_left = -307.0
 margin_top = 102.878
 margin_right = 193.0
 margin_bottom = 167.878
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0.478431, 0.466667, 0.466667, 1 )
-custom_colors/font_color_shadow = Color( 0.552941, 0.494118, 0.494118, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "Default controls: WASD to move, space to jump, enter to interact
 Satisfy the plant's cravings by feeding it food depicted in top left.
 

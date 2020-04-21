@@ -1,5 +1,7 @@
 extends Spatial
 
+export (String, FILE, "*.tscn") var next_level
+
 onready var GUIOverlay: Control = $GUIOverlay
 
 # ideally this should be a dict or an array, but eh, its a game jam game
@@ -38,16 +40,23 @@ func _process(_delta: float) -> void:
 
 	# check for victory conditions
 	if total == 0:
-		# TODO: load victory scene
-		# victory, move to next level
-		print('win')
-		Global.next_level()
-		pass
+		var timer = Timer.new()
+		timer.wait_time = 3.0
+		timer.connect("timeout", self, "_win")
+		add_child(timer)
+		timer.start()
 
 	# check for loose conditions
 	if scores['joe'] == 0 and total > 0:
-		# TODO: load the loose animation
-		# and go to main menu
-		print('loose')
-		Global.goto_menu()
+		var timer = Timer.new()
+		timer.wait_time = 3.0
+		timer.connect("timeout", self, "_lose")
+		add_child(timer)
+		timer.start()
 		pass
+
+func _win():
+	Global.goto_win_scene(next_level)
+
+func _lose():
+	Global.goto_loss_scene()

@@ -5,7 +5,7 @@ var next_scene: String
 
 func _process(delta: float) -> void:
 	timeout -= delta
-	if timeout:
+	if timeout <= 0.0:
 		Global.goto_loading_scene(next_scene)
 
 func goto_scene(next_path):

@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 		# ourselves.
 		match target:
 			Item.START:
-				Global.next_level()
+				Global.goto_loading_scene('res://levels/level1/Level0.tscn')
 				return
 			Item.OPTIONS:
 				# TODO: should this be instantiated only once and reused?

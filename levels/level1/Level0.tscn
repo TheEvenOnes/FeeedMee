@@ -81,6 +81,7 @@ data = PoolByteArray( 79, 103, 103, 83, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 19, 235, 3
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 8 )
+next_level = "res://levels/level1/Level1.tscn"
 scores = {
 "joe": 1
 }

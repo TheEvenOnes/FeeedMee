@@ -75,6 +75,7 @@ extents = Vector3( 0.696539, 2.99078, 7.12252 )
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 12 )
+next_level = "res://gui/menu_root.tscn"
 scores = {
 "cow": 3,
 "joe": 1,
@@ -277,6 +278,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 15 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]

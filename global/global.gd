@@ -3,31 +3,10 @@ extends Node2D
 var current_scene = null
 var next_scene: String = ""
 
-var _next_level = 0
-
-export (Array) var level_order = [
-	'res://levels/level1/Level0.tscn',
-	'res://levels/level1/Level1.tscn',
-	'res://levels/level1/Level3.tscn'
-]
-
 func _ready():
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() -1)
-
-func next_level():
-	if _next_level >= len(level_order):
-		# victory, got to main menu
-		_next_level = 0
-		goto_loading_scene('res://gui/menu_root.tscn')
-	else:
-		goto_loading_scene(level_order[_next_level])
-		_next_level += 1
-
-func goto_menu():
-	_next_level = 0
-	goto_loading_scene('res://gui/menu_root.tscn')
 
 func goto_scene(path):
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html
@@ -56,7 +35,7 @@ func goto_win_scene(next_path):
 func goto_loss_scene():
 	# This allows switching through the win scene securely.
 	next_scene = "res://gui/menu_root.tscn"
-	call_deferred("_deferred_goto_scene", "res://gui/loss.tscn")
+	call_deferred("_deferred_goto_scene", "res://gui/lose.tscn")
 
 func _deferred_goto_scene(path):
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html
@@ -118,7 +97,7 @@ const Achievements: Dictionary = {
 		'req': 1,
 		'show_every': 1,
 	},
-	
+
 	'pigs_10': {
 		'sort_id': 4, # Unused; would be used in GUI for achievements
 		'id': 'pigs_10',

@@ -53,7 +53,7 @@ func update_selected(rect: Rect2) -> void:
 	selected.set_point_position(5, Vector2(r, t)) # deals with the problem in the corner, closing the loop
 
 func _ready() -> void:
-	diskio = get_tree().current_scene.get_node("Controls_DiskIO")
+	diskio = get_parent().get_parent().get_parent().get_node("Controls_DiskIO")
 
 	for child in get_children():
 		if child is GenericItemRow:

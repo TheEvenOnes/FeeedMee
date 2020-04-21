@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/detail.png-14c6de32f316ae29f706217785e2440d.stex"
+path="res://.import/splat.png-5878dd834b367e1620cc29648be557e0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/level1/hterrain/detail.png"
-dest_files=[ "res://.import/detail.png-14c6de32f316ae29f706217785e2440d.stex" ]
+source_file="res://levels/level1/level3/splat.png"
+dest_files=[ "res://.import/splat.png-5878dd834b367e1620cc29648be557e0.stex" ]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
-[ext_resource path="res://levels/level1/hterrain/data.hterrain" type="Resource" id=3]
+[ext_resource path="res://levels/level1/level3/data.hterrain" type="Resource" id=3]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" type="Script" id=4]
 [ext_resource path="res://sound/hurt1.ogg" type="AudioStream" id=5]
 [ext_resource path="res://actors/TigerPlant.tscn" type="PackedScene" id=6]
@@ -74,8 +74,10 @@ extents = Vector3( 0.696539, 2.99078, 7.12252 )
 [node name="Level" type="Spatial"]
 script = ExtResource( 12 )
 scores = {
-"cow": 1,
-"joe": 1
+"cow": 3,
+"joe": 1,
+"pig": 2,
+"redneck": 3
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -242,7 +244,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458278, -0.315842, -8.81891
 "huntable",
 "joe",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.34343, 1.6665, 4.60105 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.34343, 1.6665, 16.0631 )
 script = ExtResource( 2 )
 MAX_SPEED = 7.0
 JUMP_SPEED = 6.0
@@ -331,6 +333,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.99913, 0 )
 ] instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.300506, 0.385901, -9.69358 )
 
+[node name="Cow4" parent="Animals" groups=[
+"cow",
+] instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71286, 0.385901, -11.5124 )
+
+[node name="Cow5" parent="Animals" groups=[
+"cow",
+] instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.614648, 0.385901, -11.2312 )
+
 [node name="Cow2" parent="Animals" groups=[
 "cow",
 ] instance=ExtResource( 20 )]
@@ -347,10 +359,76 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.49412, 0.57921, 7.54287 )
 transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 0.602338, 0.145164, -9.36789 )
 SPRITE = ExtResource( 23 )
 
+[node name="Piglet2" parent="Animals" groups=[
+"pig",
+] instance=ExtResource( 20 )]
+transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, -1.63844, 0.145164, -10.1768 )
+SPRITE = ExtResource( 23 )
+
+[node name="Piglet3" parent="Animals" groups=[
+"pig",
+] instance=ExtResource( 20 )]
+transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 5.23014, 0.271623, -8.26171 )
+SPRITE = ExtResource( 23 )
+
+[node name="Piglet4" parent="Animals" groups=[
+"pig",
+] instance=ExtResource( 20 )]
+transform = Transform( 0.561818, 0, 0, 0, 0.561818, 0, 0, 0, 1, 4.53622, 0.285306, -5.29017 )
+SPRITE = ExtResource( 23 )
+
 [node name="Villager" parent="Animals" groups=[
 "redneck",
 ] instance=ExtResource( 28 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.566549, -2.22586 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+MAX_TIRED = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+MAX_SPEED = 2.5
+ACCEL = 4.0
+DEACCEL = 16.0
+MAX_SLOPE_ANGLE = 30.0
+NUDGE_BACK_INNER = 1.5
+NUDGE_BACK_OUTER = 7.0
+
+[node name="Villager2" parent="Animals" groups=[
+"redneck",
+] instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63007, 0.566549, -5.81271 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+MAX_TIRED = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+MAX_SPEED = 2.5
+ACCEL = 4.0
+DEACCEL = 16.0
+MAX_SLOPE_ANGLE = 30.0
+NUDGE_BACK_INNER = 1.5
+NUDGE_BACK_OUTER = 7.0
+
+[node name="Villager3" parent="Animals" groups=[
+"redneck",
+] instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0822, 0.566549, 7.04768 )
+HEALTH = 10.0
+MAX_HUNGER = 3.0
+MAX_TIRED = 3.0
+AI_DECISION_SPEED = 2.0
+GRAVITY = -24.8
+MAX_SPEED = 2.5
+ACCEL = 4.0
+DEACCEL = 16.0
+MAX_SLOPE_ANGLE = 30.0
+NUDGE_BACK_INNER = 1.5
+NUDGE_BACK_OUTER = 7.0
+
+[node name="Villager4" parent="Animals" groups=[
+"redneck",
+] instance=ExtResource( 28 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.63093, 0.566549, -5.49153 )
 HEALTH = 10.0
 MAX_HUNGER = 3.0
 MAX_TIRED = 3.0

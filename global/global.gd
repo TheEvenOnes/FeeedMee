@@ -6,8 +6,9 @@ var next_scene: String = ""
 var _next_level = 0
 
 export (Array) var level_order = [
-	'res://levels/level0/Level.tscn',
-	'res://levels/level1/Level.tscn'
+	'res://levels/level1/Level0.tscn',
+	'res://levels/level1/Level1.tscn',
+	'res://levels/level1/Level3.tscn'
 ]
 
 func _ready():
@@ -16,13 +17,13 @@ func _ready():
 	current_scene = root.get_child(root.get_child_count() -1)
 
 func next_level():
-	_next_level += 1
-	if _next_level > len(level_order):
+	if _next_level >= len(level_order):
 		# victory, got to main menu
 		_next_level = 0
 		goto_loading_scene('res://gui/menu_root.tscn')
 	else:
 		goto_loading_scene(level_order[_next_level])
+		_next_level += 1
 
 func goto_menu():
 	_next_level = 0

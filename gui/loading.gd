@@ -93,7 +93,7 @@ func update_progress():
 func set_new_scene(scene_resource):
 	wait_frames = 1
 	call_deferred('set_new_scene_deferred', scene_resource)
-	
+
 func set_new_scene_deferred(scene_resource):
 	print('setting new scene')
 	var new_scene = scene_resource.instance()

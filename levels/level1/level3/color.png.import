@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/normal.png-65644c7e7cc6aeaf8e774ac92a655224.stex"
+path="res://.import/color.png-80e9659519b8b77bdc860d08c5ffd06c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/level1/hterrain/normal.png"
-dest_files=[ "res://.import/normal.png-65644c7e7cc6aeaf8e774ac92a655224.stex" ]
+source_file="res://levels/level1/level3/color.png"
+dest_files=[ "res://.import/color.png-80e9659519b8b77bdc860d08c5ffd06c.stex" ]
 
 [params]
 
@@ -23,7 +23,7 @@ flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/global_albedo.png-ccaa8f59bd517d70fcc23df4e133cee9.stex"
+path="res://.import/detail4.png-a33591c7174c10cce060130320df2e44.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://levels/level1/hterrain/global_albedo.png"
-dest_files=[ "res://.import/global_albedo.png-ccaa8f59bd517d70fcc23df4e133cee9.stex" ]
+source_file="res://levels/level1/level1/detail4.png"
+dest_files=[ "res://.import/detail4.png-a33591c7174c10cce060130320df2e44.stex" ]
 
 [params]
 
@@ -23,7 +23,7 @@ flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false

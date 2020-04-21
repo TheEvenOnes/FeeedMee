@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://levels/level1/Player.gd" type="Script" id=2]
@@ -21,7 +21,6 @@
 [ext_resource path="res://sound/eating_short.ogg" type="AudioStream" id=19]
 [ext_resource path="res://actors/Animal.tscn" type="PackedScene" id=20]
 [ext_resource path="res://sprites/dirt.png" type="Texture" id=21]
-[ext_resource path="res://sound/Mudchute_cow_1.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sprites/piglet.tres" type="SpriteFrames" id=23]
 [ext_resource path="res://sound/die.ogg" type="AudioStream" id=25]
 [ext_resource path="res://actors/Villager.tscn" type="PackedScene" id=28]

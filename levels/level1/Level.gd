@@ -41,7 +41,7 @@ func _process(_delta: float) -> void:
 	# check for victory conditions
 	if total == 0:
 		var timer = Timer.new()
-		timer.wait_time = 3.0
+		timer.wait_time = 2.0
 		timer.connect("timeout", self, "_win")
 		add_child(timer)
 		timer.start()
@@ -49,7 +49,7 @@ func _process(_delta: float) -> void:
 	# check for loose conditions
 	if scores['joe'] == 0 and total > 0:
 		var timer = Timer.new()
-		timer.wait_time = 3.0
+		timer.wait_time = 2.0
 		timer.connect("timeout", self, "_lose")
 		add_child(timer)
 		timer.start()

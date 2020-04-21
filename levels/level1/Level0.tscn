@@ -47,8 +47,10 @@ fog_depth_curve = 0.517632
 fog_transmit_curve = 0.965938
 ssao_radius = 2.0
 ssao_quality = 0
+dof_blur_far_enabled = true
 dof_blur_far_distance = 7.5
 dof_blur_far_quality = 2
+dof_blur_near_enabled = true
 dof_blur_near_distance = 5.0
 glow_intensity = 4.0
 glow_strength = 1.5
@@ -231,6 +233,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 17 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]

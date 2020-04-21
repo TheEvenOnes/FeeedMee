@@ -48,6 +48,16 @@ func goto_loading_scene(next_path):
 	next_scene = next_path
 	call_deferred("_deferred_goto_scene", "res://gui/loading.tscn")
 
+func goto_win_scene(next_path):
+	# This allows switching through the win scene securely.
+	next_scene = next_path
+	call_deferred("_deferred_goto_scene", "res://gui/win.tscn")
+
+func goto_loss_scene():
+	# This allows switching through the win scene securely.
+	next_scene = "res://gui/menu_root.tscn"
+	call_deferred("_deferred_goto_scene", "res://gui/loss.tscn")
+
 func _deferred_goto_scene(path):
 	# https://docs.godotengine.org/en/3.0/getting_started/step_by_step/singletons_autoload.html
 	# Immediately free the current scene,

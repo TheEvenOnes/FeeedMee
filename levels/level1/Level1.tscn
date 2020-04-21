@@ -239,6 +239,7 @@ shaded = true
 alpha_cut = 2
 frames = ExtResource( 17 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Spot" type="SpotLight" parent="Player"]
